@@ -1,0 +1,10 @@
+.profile__user {
+  margin-left: 30px;
+}
+
+@media (max-width: 768px) {
+  .profile__user {
+    text-align: center;
+    margin: 0;
+  }
+}

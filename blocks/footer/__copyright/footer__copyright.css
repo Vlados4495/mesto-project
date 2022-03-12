@@ -1,0 +1,10 @@
+.footer__copyright {
+  margin: 0;
+  color: #545454;
+}
+
+@media (max-width: 900px) {
+  .footer__copyright {
+    padding-left: 20px;
+  }
+}
