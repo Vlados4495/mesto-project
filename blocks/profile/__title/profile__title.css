@@ -14,9 +14,13 @@
 
 @media (max-width: 768px) {
   .profile__title {
+    max-width: 189px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 500;
     font-size: 27px;
     line-height: 33px;
-    margin: 0 10px 0 0;
-    max-width: 250px;
+    padding-left: 40px;
+    padding-top: 26px;
   }
 }

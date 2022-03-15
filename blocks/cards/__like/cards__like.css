@@ -15,7 +15,8 @@
 }
 
 .cards__like:hover {
-  background-image: url(../../../images/hover-like.svg);
+  opacity: 0.6;
+  cursor: pointer;
 }
 
 .cards__like.card__like:active {

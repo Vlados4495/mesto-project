@@ -7,8 +7,8 @@
   overflow: hidden;
   white-space: nowrap;
   max-width: 210px;
-  margin-top: 25px;
-  margin-left: 21px;
-  margin-bottom: 31px;
-  margin-right: 0;
+  margin: 0;
+  padding-left: 21px;
+  padding-bottom: 32px;
+  padding-top: 25px;
 }

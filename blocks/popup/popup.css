@@ -9,4 +9,5 @@
   bottom: 0;
   display: flex;
   opacity: 1;
+  visibility: hidden;
 }
