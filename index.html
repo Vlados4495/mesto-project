@@ -115,5 +115,18 @@
         <button type="button" class="popup__closed"></button>
       </div>
     </div>
+
+    <div id="popup-add" class="popup">
+      <div class="popup__container">
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form" name="popup-form" novalidate>
+            <input type="text" class="popup__input" name="name" id="input-popup-title" value="" placeholder="Название" minlength="2" maxlength="40" required>
+            <input type="text" class="popup__input" name="link" id="input-popup-subtitle" value="" placeholder="Ссылка на картинку" minlength="2" maxlength="200" required>
+            <button type="submit" id="popup__button_save" class="popup__button">Сохранить</button>
+        </form>
+        <button type="button" id="popup__close" class="popup__closed"></button>
+      </div>
+    </div>
+    <script src="./script.js"></script>
   </body>
 </html>
