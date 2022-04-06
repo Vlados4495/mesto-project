@@ -34,6 +34,22 @@ popupAddImageClosed.addEventListener('click', function() {
     popupAddImage.classList.remove('popup_opened')
 }); 
 
+popupOpened.addEventListener('click', function(event) {
+    if(event.target === event.currentTarget) {
+        closePopup()
+    
+    }
+})
+
+popupAddImage.addEventListener('click', function(event){
+    if(event.target === event.currentTarget) {
+        popupAddImage.classList.remove('popup_opened')
+    
+    }
+})
+
+
+
 // Находим форму в DOM
 const formElement = document.querySelector('.popup__form')
 
@@ -44,8 +60,6 @@ const jobInput = document.querySelector('#input-popup-subtitle');
 function formSubmitHandler (evt) {
   evt.preventDefault(); 
 // Эта строчка отменяет стандартную отправку формы.
-
-
 
 profileName.textContent = nameInput.value;
 jobName.textContent = jobInput.value;
