@@ -12,6 +12,10 @@ const popupAddImageClosed = document.getElementById('popup__close') //Кнопк
 const profileName = document.querySelector('.profile__title')
 const jobName = document.querySelector('.profile__subtitle')
 
+const placesSection = document.querySelector('.cards__items');
+const placeTitle = document.querySelector('.cards__title');
+const placeImg = document.querySelector('.cards__item-image');
+
 //Открываем попап
 function openPopup() {
     popupOpened.classList.add('popup_opened')
@@ -47,6 +51,61 @@ popupAddImage.addEventListener('click', function(event){
     
     }
 })
+
+//Работаем с карточками
+const initialCards = [
+    {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    },
+    {
+        name: 'Кайкал',
+        link: 'https://images.unsplash.com/photo-1649306650938-05dc291fcdb3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80'
+      }
+  ]; 
+
+
+  const template = document.querySelector('.template');
+  const templateContent = template.content.cloneNode(true);
+  const items = templateContent.querySelector('.cards__items');
+  const container = document.querySelector('.cards');
+  
+  container.prepend(items);
+  
+  initialCards.forEach(info => {
+    console.log({ info })
+    const item = items.querySelector('.cards__item').cloneNode(true);
+    const image = item.querySelector('.cards__item-image');
+    
+    image.src = info.link;
+    image.alt = info.name;
+    
+    const title = item.querySelector('.cards__title');
+    title.textContent = info.name;
+    
+    items.prepend(item);
+  });
+  
 
 
 
