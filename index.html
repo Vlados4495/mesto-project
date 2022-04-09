@@ -30,74 +30,7 @@
       </section>
 
       <section class="cards">
-        <!-- <ul class="cards__items">
-          <li class="cards__item">
-            <img
-              class="cards__item-image"
-              src="./images/karachevks.jpg"
-              alt="Карачевск"
-            />
-            <div class="cards__info">
-              <h2 class="cards__title">Карачевск</h2>
-              <button type="button" class="cards__like"></button>
-            </div>
-          </li>
-          <li class="cards__item">
-            <img
-              class="cards__item-image"
-              src="./images/gora_elbrus.jpg"
-              alt="Гора Эльбрус"
-            />
-            <div class="cards__info">
-              <h2 class="cards__title">Гора Эльбрус</h2>
-              <button type="button" class="cards__like"></button>
-            </div>
-          </li>
-          <li class="cards__item">
-            <img
-              class="cards__item-image"
-              src="./images/dombau.jpg"
-              alt="Домбай"
-            />
-            <div class="cards__info">
-              <h2 class="cards__title">Домбай</h2>
-              <button type="button" class="cards__like"></button>
-            </div>
-          </li>
-          <li class="cards__item">
-            <img
-              class="cards__item-image"
-              src="./images/gora_elbrus.jpg"
-              alt="Гора Эльбрус"
-            />
-            <div class="cards__info">
-              <h2 class="cards__title">Гора Эльбрус</h2>
-              <button type="button" class="cards__like"></button>
-            </div>
-          </li>
-          <li class="cards__item">
-            <img
-              class="cards__item-image"
-              src="./images/dombau.jpg"
-              alt="Домбай"
-            />
-            <div class="cards__info">
-              <h2 class="cards__title">Домбай</h2>
-              <button type="button" class="cards__like"></button>
-            </div>
-          </li>
-          <li class="cards__item">
-            <img
-              class="cards__item-image"
-              src="./images/karachevks.jpg"
-              alt="Карачевск"
-            />
-            <div class="cards__info">
-              <h2 class="cards__title">Кабардино-балкария</h2>
-              <button type="button" class="cards__like"></button>
-            </div>
-          </li>
-        </ul> -->
+        <ul class="cards__items"></ul>
       </section>
     </main>
     <footer class="footer">
@@ -108,9 +41,29 @@
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__form" name="popup-form" novalidate>
-            <input type="text" class="popup__input" name="name" id="input-popup-title" value="" placeholder="Имя" minlength="2" maxlength="40" required>
-            <input type="text" class="popup__input" name="about" id="input-popup-subtitle" value="" placeholder="О Себе" minlength="2" maxlength="200" required>
-            <button type="submit" class="popup__button">Сохранить</button>
+          <input
+            type="text"
+            class="popup__input"
+            name="name"
+            id="input-popup-title"
+            value=""
+            placeholder="Имя"
+            minlength="2"
+            maxlength="40"
+            required
+          />
+          <input
+            type="text"
+            class="popup__input"
+            name="about"
+            id="input-popup-subtitle"
+            value=""
+            placeholder="О Себе"
+            minlength="2"
+            maxlength="200"
+            required
+          />
+          <button type="submit" class="popup__button">Сохранить</button>
         </form>
         <button type="button" class="popup__closed"></button>
       </div>
@@ -120,30 +73,46 @@
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
         <form class="popup__form" name="popup-form" novalidate>
-            <input type="text" class="popup__input" name="name" id="input-popup-title" value="" placeholder="Название" minlength="2" maxlength="40" required>
-            <input type="text" class="popup__input" name="link" id="input-popup-subtitle" value="" placeholder="Ссылка на картинку" minlength="2" maxlength="200" required>
-            <button type="submit" id="popup__button_save" class="popup__button">Сохранить</button>
+          <input
+            type="text"
+            class="popup__input"
+            name="name"
+            id="input-popup-title"
+            value=""
+            placeholder="Название"
+            minlength="2"
+            maxlength="40"
+            required
+          />
+          <input
+            type="text"
+            class="popup__input"
+            name="link"
+            id="input-popup-subtitle"
+            value=""
+            placeholder="Ссылка на картинку"
+            minlength="2"
+            maxlength="200"
+            required
+          />
+          <button type="submit" id="popup__button_save" class="popup__button">
+            Сохранить
+          </button>
         </form>
         <button type="button" id="popup__close" class="popup__closed"></button>
       </div>
     </div>
 
-    <template class="template">
-      <ul class="cards__items">
-          <li class="cards__item">
-            <img
-              class="cards__item-image"
-              src=""
-              alt=""
-            />
-            <div class="cards__info">
-              <h2 class="cards__title"></h2>
-              <button type="button" class="cards__like"></button>
-            </div>
-          </li>
-        </ul>
+    <template id="cards__template">
+      <li class="cards__item">
+        <button type="button" id="delete_button" class="cards__item-delete"></button>
+        <img class="cards__item-image" src="" alt="" />
+        <div class="cards__info">
+          <h2 class="cards__title"></h2>
+          <button type="button" class="cards__like"></button>
+        </div>
+      </li>
     </template>
-
 
     <script src="./script.js"></script>
   </body>
