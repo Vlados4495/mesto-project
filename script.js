@@ -9,7 +9,8 @@ const popupClosed = document.querySelector(".popup__closed"); //Кнопка з�
 const popupAddImage = document.getElementById("popup-add"); //Второй поп с добавлением нового места
 const popupAddImageClosed = document.getElementById("popup__close"); //Кнопка Закрыть попап
 
-
+const cardImagePopup = document.querySelector('.popup__card'); // Попап с картинкой
+const cardImagePopupClose = document.querySelector('#popup__card_close') //Кнопка закрыть попап
 
 
 const profileName = document.querySelector(".profile__title");
@@ -27,6 +28,11 @@ function openPopup() {
 function closePopup() {
   popupOpened.classList.remove("popup_opened");
 }
+
+//Закрываем попап с картинкой
+cardImagePopupClose.addEventListener('click', function (){
+  cardImagePopup.classList.remove('popup_opened')
+})
 
 editButton.addEventListener("click", openPopup);
 popupClosed.addEventListener("click", closePopup);
@@ -50,6 +56,12 @@ popupOpened.addEventListener("click", function (event) {
 popupAddImage.addEventListener("click", function (event) {
   if (event.target === event.currentTarget) {
     popupAddImage.classList.remove("popup_opened");
+  }
+});
+
+cardImagePopup.addEventListener("click", function (event) {
+  if (event.target === event.currentTarget) {
+    cardImagePopup.classList.remove('popup_opened');
   }
 });
 
@@ -85,7 +97,7 @@ initialCards.forEach(info => {
 const cardsTemplate = document.querySelector('#cards__template').content;
 const cardsContainer = document.querySelector('.cards__items');
 const cardsElement = cardsTemplate.querySelector('.cards__item').cloneNode(true);
-
+const cardsImg = cardsElement.querySelector('.cards__item-image');
 
 cardsElement.querySelector('.cards__item-image').src = info.link;
 cardsElement.querySelector('.cards__title').alt = info.name;
@@ -96,20 +108,29 @@ cardsElement.querySelector('.cards__like').addEventListener('click', function(ev
 cardsElement.querySelector('#delete_button').addEventListener('click', function() { 
 cardsElement.remove()
 
-cardsElement.querySelector('.cards__item-image').addEventListener('click', function() {
-  const cardImagePopup = document.querySelector('.popup__card');
-  cardImagePopup.classList.add("popup_opened");
-  console.log(cardImagePopup)
-})
-
-
 
 })
 
+
+
+cardsImg.addEventListener('click', function() {
+ 
+  cardImagePopup.classList.add('popup_opened');
+  const cardImageLink = document.querySelector('.popup__card_image');
+  const cardImageTitle = document.querySelector('.popup__card_title');
+  cardImageLink.src = info.link;
+  cardImageTitle.textContent = info.name;
+
+  popupClosed.addEventListener('click', function() {
+    cardImagePopup.classList.remove('popup_opened');
+  }) 
+});
 
 
 cardsContainer.append(cardsElement);
 
+
+editButton.addEventListener("click", openPopup);
 });
 
 //Добавляем новую карточку
@@ -126,6 +147,19 @@ function addCard (nameValue, linkValue) {
   cardsElement.querySelector('#delete_button').addEventListener('click', function() { 
     cardsElement.remove()
     })
+
+    const cardsImg = cardsElement.querySelector('.cards__item-image');
+
+    cardsImg.addEventListener('click', function() {
+      const cardImagePopup = document.querySelector('.popup__card');
+      cardImagePopup.classList.add('popup_opened');
+      const cardImageLink = document.querySelector('.popup__card_image');
+      const cardImageTitle = document.querySelector('.popup__card_title');
+      cardImageLink.src = linkValue
+      cardImageTitle.textContent = nameValue
+    });
+    
+
   cardsContainer.prepend(cardsElement);
 }
 
