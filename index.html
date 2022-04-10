@@ -34,8 +34,10 @@
       </section>
     </main>
     <footer class="footer">
-      <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
+      <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
+
+  
 
     <div id="popup-edit" class="popup">
       <div class="popup__container">
@@ -72,12 +74,12 @@
     <div id="popup-add" class="popup">
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
-        <form class="popup__form" name="popup-form" novalidate>
+        <form class="popup__form_add" name="popup-form" novalidate>
           <input
             type="text"
             class="popup__input"
             name="name"
-            id="input-popup-title"
+            id="input-popup-name"
             value=""
             placeholder="Название"
             minlength="2"
@@ -88,24 +90,40 @@
             type="text"
             class="popup__input"
             name="link"
-            id="input-popup-subtitle"
+            id="input-popup-link"
             value=""
             placeholder="Ссылка на картинку"
             minlength="2"
             maxlength="200"
             required
           />
-          <button type="submit" id="popup__button_save" class="popup__button">
-            Сохранить
+          <button type="submit" id="popup-add_submit" class="popup__button">
+            Создать
           </button>
         </form>
         <button type="button" id="popup__close" class="popup__closed"></button>
       </div>
     </div>
 
+    <div id="popup__card" class="popup popup__card">
+      <div class="popup__card_container">
+        <button type="button" class="popup__closed"></button>
+        <img
+          class="popup__card_image"
+          src="https://images.unsplash.com/photo-1649562066543-25a1ccec23cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80"
+          alt=""
+        />
+        <h4 class="popup__card_title">text</h4>
+      </div>
+    </div>
+
     <template id="cards__template">
       <li class="cards__item">
-        <button type="button" id="delete_button" class="cards__item-delete"></button>
+        <button
+          type="button"
+          id="delete_button"
+          class="cards__item-delete"
+        ></button>
         <img class="cards__item-image" src="" alt="" />
         <div class="cards__info">
           <h2 class="cards__title"></h2>

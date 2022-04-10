@@ -1,7 +1,7 @@
 const editButton = document.querySelector(".profile__edit-button"); //Кнопка редактировать профиль
 const editButtonSave = document.querySelector(".popup__button"); //Кнопка сохранить изменения в профиле
 const addButton = document.querySelector(".profile__add-button"); //Кнопка добавить новое место
-const addButtonSave = document.querySelector("#popup__button_save"); //Кнопка сохранить новое место
+const addButtonSave = document.querySelector("#popup-add_submit"); //Кнопка сохранить новое место
 
 const popupOpened = document.querySelector(".popup"); //Попап
 const popupClosed = document.querySelector(".popup__closed"); //Кнопка закрыть попап
@@ -9,12 +9,15 @@ const popupClosed = document.querySelector(".popup__closed"); //Кнопка з�
 const popupAddImage = document.getElementById("popup-add"); //Второй поп с добавлением нового места
 const popupAddImageClosed = document.getElementById("popup__close"); //Кнопка Закрыть попап
 
+
+
+
 const profileName = document.querySelector(".profile__title");
 const jobName = document.querySelector(".profile__subtitle");
 
-const placesSection = document.querySelector(".cards__items");
-const placeTitle = document.querySelector(".cards__title");
-const placeImg = document.querySelector(".cards__item-image");
+const cardsContainer = document.querySelector('.cards__items');
+
+
 
 //Открываем попап
 function openPopup() {
@@ -80,7 +83,6 @@ const initialCards = [
 
 initialCards.forEach(info => {
 const cardsTemplate = document.querySelector('#cards__template').content;
-console.log(cardsTemplate)
 const cardsContainer = document.querySelector('.cards__items');
 const cardsElement = cardsTemplate.querySelector('.cards__item').cloneNode(true);
 
@@ -93,13 +95,63 @@ cardsElement.querySelector('.cards__like').addEventListener('click', function(ev
 })
 cardsElement.querySelector('#delete_button').addEventListener('click', function() { 
 cardsElement.remove()
+
+cardsElement.querySelector('.cards__item-image').addEventListener('click', function() {
+  const cardImagePopup = document.querySelector('.popup__card');
+  cardImagePopup.classList.add("popup_opened");
+  console.log(cardImagePopup)
 })
 
+
+
+})
+
+
+
 cardsContainer.append(cardsElement);
+
 });
+
+//Добавляем новую карточку
+function addCard (nameValue, linkValue) {
+  const cardsTemplate = document.querySelector('#cards__template').content;
+  const cardsElement = cardsTemplate.querySelector('.cards__item').cloneNode(true);
+
+  cardsElement.querySelector('.cards__item-image').src = linkValue;
+  cardsElement.querySelector('.cards__title').alt = nameValue;
+  cardsElement.querySelector('.cards__title').textContent = nameValue;
+  cardsElement.querySelector('.cards__like').addEventListener('click', function(evt){
+    evt.target.classList.toggle('cards__like_active')
+  })
+  cardsElement.querySelector('#delete_button').addEventListener('click', function() { 
+    cardsElement.remove()
+    })
+  cardsContainer.prepend(cardsElement);
+}
+
+const formElementAdd = document.querySelector('.popup__form_add');
+
+// addButtonSave.addEventListener('click', function (evt) { 
+function addButtonSaved(evt) {
+  evt.preventDefault();
+  const name = document.querySelector('#input-popup-name');
+  const link = document.querySelector('#input-popup-link');
+ 
+
+  addCard(name.value, link.value);
+ 
+
+  name.value = '';
+  link.value = '';
+
+  popupAddImage.classList.remove("popup_opened");
+};
+
+formElementAdd.addEventListener('submit', addButtonSaved);
 
 //Редактирование профиля
 // Находим форму в DOM
+
 const formElement = document.querySelector(".popup__form");
 
 // Находим поля формы в DOM
@@ -113,7 +165,7 @@ function formSubmitHandler(evt) {
   profileName.textContent = nameInput.value;
   jobName.textContent = jobInput.value;
 
-  popupOpened.classList.remove("popup_opened");
+  closePopup();
 }
 
 //Заполненная форрма в профиле
@@ -122,6 +174,8 @@ function fillProfilePopup() {
   nameInput.value = profileName.textContent;
   jobInput.value = jobName.textContent;
 }
+
+
 
 formElement.addEventListener("submit", formSubmitHandler);
 

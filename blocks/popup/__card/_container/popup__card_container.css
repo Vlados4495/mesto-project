@@ -1,0 +1,6 @@
+.popup__card_container {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  position: relative;
+}
