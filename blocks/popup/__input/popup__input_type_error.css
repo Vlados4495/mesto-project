@@ -1,0 +1,13 @@
+.popup__input_type_error {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ff0000;
+  max-width: 358px;
+  margin: auto;
+  padding-bottom: 13px;
+  margin-bottom: 5px;
+  display: flex;
+  margin-right: auto;
+  margin-left: 36px;
+}

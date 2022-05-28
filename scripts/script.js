@@ -56,7 +56,7 @@ popupAddImageClosed.addEventListener("click", function () {
 });
 
 profilePopup.addEventListener("click", function (event) {
-  if (event.target === event.currentTarget) {
+  if ((event.target === event.currentTarget) && (event.key === "Escape")) {
     closePopup(profilePopup);
   }
 });
@@ -67,9 +67,10 @@ popupAddImage.addEventListener("click", function (event) {
   }
 });
 
-cardImagePopup.addEventListener("click", function (event) {
-  if (event.target === event.currentTarget) {
+cardImagePopup.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
     closePopup(cardImagePopup);
+    console.log(event.key);
   }
 });
 
@@ -185,3 +186,85 @@ function openProfilePopup() {
 profileForm.addEventListener("submit", handleProfileFormSubmit);
 
 editButton.addEventListener("click", openProfilePopup);
+
+//Валидация формы
+const formSubmit = (event) => {
+  event.preventDefault();
+};
+//Попап добавления места, проверяем валидность
+const checkInputValidity = (form, input) => {
+  const errorMessage = form.querySelector(`#${input.id}-error`);
+  console.log(input.id);
+  if (input.validity.valid) {
+    errorMessage.textContent = "";
+    input.classList.remove("popup__input-error_active");
+  } else {
+    errorMessage.textContent = input.validationMessage;
+    input.classList.add("popup__input-error_active");
+  }
+};
+//Ред профиль валидность
+const checkEditInputValidity = (editForm, input) => {
+  const errorMessage = editForm.querySelector(`#${input.id}-error`);
+  console.log(input.id);
+  if (input.validity.valid) {
+    errorMessage.textContent = "";
+    input.classList.remove("popup__input-error_active");
+  } else {
+    errorMessage.textContent = input.validationMessage;
+    input.classList.add("popup__input-error_active");
+  }
+};
+
+const checkButtonValidity = (form, addButtonSave) => {
+  if (form.checkValidity()) {
+    addButtonSave.removeAttribute("disabled", "");
+    addButtonSave.classList.remove("popup__button_inactive");
+  } else {
+    addButtonSave.setAttribute("disabled", "");
+    addButtonSave.classList.add("popup__button_inactive");
+  }
+};
+
+const checkEditButtonValidity = (editForm, editButtonSave) => {
+  if (editForm.checkValidity()) {
+    editButtonSave.removeAttribute("disabled", "");
+    editButtonSave.classList.remove("popup__button_inactive");
+  } else {
+    editButtonSave.setAttribute("disabled", "");
+    editButtonSave.classList.add("popup__button_inactive");
+  }
+};
+
+function enableValidation() {
+  //Подключаем формы
+  const form = document.querySelector(".popup__form_add");
+  const editForm = document.querySelector(".popup__form");
+
+  form.addEventListener("submit", formSubmit);
+  editForm.addEventListener("submit", formSubmit);
+
+  const editFormInputs = editForm.querySelectorAll(".popup__input");
+
+  const inputs = form.querySelectorAll(".popup__input");
+
+
+  checkButtonValidity(form, addButtonSave);
+  checkEditButtonValidity(editForm, editButtonSave);
+
+  editFormInputs.forEach((input) => {
+    input.addEventListener("input", (event) => {
+      checkEditInputValidity(editForm, input);
+      checkEditButtonValidity(editForm, editButtonSave);
+    });
+  });
+
+  inputs.forEach((input) => {
+    input.addEventListener("input", (event) => {
+      checkInputValidity(form, input);
+      checkButtonValidity(form, addButtonSave);
+    });
+  });
+}
+
+enableValidation();
