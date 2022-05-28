@@ -56,7 +56,7 @@ popupAddImageClosed.addEventListener("click", function () {
 });
 
 profilePopup.addEventListener("click", function (event) {
-  if ((event.target === event.currentTarget) && (event.key === "Escape")) {
+  if (event.target === event.currentTarget) {
     closePopup(profilePopup);
   }
 });
@@ -67,10 +67,9 @@ popupAddImage.addEventListener("click", function (event) {
   }
 });
 
-cardImagePopup.addEventListener("keydown", function (event) {
-  if (event.key === "Escape") {
+cardImagePopup.addEventListener("click", function (event) {
+  if (event.target === event.currentTarget) {
     closePopup(cardImagePopup);
-    console.log(event.key);
   }
 });
 
@@ -268,3 +267,11 @@ function enableValidation() {
 }
 
 enableValidation();
+
+window.addEventListener('keydown', (evt) => {
+  if(evt.key === 'Escape') {
+    closePopup(cardImagePopup);
+    closePopup(profilePopup);
+    closePopup(popupAddImage);
+  }
+});
