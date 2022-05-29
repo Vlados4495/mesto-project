@@ -191,82 +191,86 @@ const formSubmit = (event) => {
   event.preventDefault();
 };
 //Попап добавления места, проверяем валидность
-const checkInputValidity = (form, input) => {
+const checkInputValidity = (config, form, input) => {
   const errorMessage = form.querySelector(`#${input.id}-error`);
-  console.log(input.id);
   if (input.validity.valid) {
     errorMessage.textContent = "";
-    input.classList.remove("popup__input-error_active");
+    input.classList.remove(config.inputErrorClass);
   } else {
     errorMessage.textContent = input.validationMessage;
-    input.classList.add("popup__input-error_active");
+    input.classList.add(config.inputErrorClass);
   }
 };
 //Ред профиль валидность
-const checkEditInputValidity = (editForm, input) => {
+const checkEditInputValidity = (config, editForm, input) => {
   const errorMessage = editForm.querySelector(`#${input.id}-error`);
-  console.log(input.id);
   if (input.validity.valid) {
     errorMessage.textContent = "";
-    input.classList.remove("popup__input-error_active");
+    input.classList.remove(config.inputErrorClass);
   } else {
     errorMessage.textContent = input.validationMessage;
-    input.classList.add("popup__input-error_active");
+    input.classList.add(config.inputErrorClass);
   }
 };
 
-const checkButtonValidity = (form, addButtonSave) => {
+const checkButtonValidity = (config, form, addButtonSave) => {
   if (form.checkValidity()) {
     addButtonSave.removeAttribute("disabled", "");
-    addButtonSave.classList.remove("popup__button_inactive");
+    addButtonSave.classList.remove(config.disabledButtonClass);
   } else {
     addButtonSave.setAttribute("disabled", "");
-    addButtonSave.classList.add("popup__button_inactive");
+    addButtonSave.classList.add(config.disabledButtonClass);
   }
 };
 
-const checkEditButtonValidity = (editForm, editButtonSave) => {
+const checkEditButtonValidity = (config, editForm, editButtonSave) => {
   if (editForm.checkValidity()) {
     editButtonSave.removeAttribute("disabled", "");
-    editButtonSave.classList.remove("popup__button_inactive");
+    editButtonSave.classList.remove(config.disabledButtonClass);
   } else {
     editButtonSave.setAttribute("disabled", "");
-    editButtonSave.classList.add("popup__button_inactive");
+    editButtonSave.classList.add(config.disabledButtonClass);
   }
 };
 
-function enableValidation() {
+function enableValidation(config) {
   //Подключаем формы
-  const form = document.querySelector(".popup__form_add");
-  const editForm = document.querySelector(".popup__form");
+  const form = document.querySelector(config.formSelector);
+  const editForm = document.querySelector(config.editFormSelector);
 
   form.addEventListener("submit", formSubmit);
   editForm.addEventListener("submit", formSubmit);
 
-  const editFormInputs = editForm.querySelectorAll(".popup__input");
+  const editFormInputs = editForm.querySelectorAll(config.inputSelector);
 
-  const inputs = form.querySelectorAll(".popup__input");
+  const inputs = form.querySelectorAll(config.inputSelector);
 
 
-  checkButtonValidity(form, addButtonSave);
-  checkEditButtonValidity(editForm, editButtonSave);
+  checkButtonValidity(config, form, addButtonSave);
+  checkEditButtonValidity(config, editForm, editButtonSave);
 
   editFormInputs.forEach((input) => {
     input.addEventListener("input", (event) => {
-      checkEditInputValidity(editForm, input);
-      checkEditButtonValidity(editForm, editButtonSave);
+      checkEditInputValidity(config, editForm, input);
+      checkEditButtonValidity(config, editForm, editButtonSave);
     });
   });
 
   inputs.forEach((input) => {
     input.addEventListener("input", (event) => {
-      checkInputValidity(form, input);
-      checkButtonValidity(form, addButtonSave);
+      checkInputValidity(config, form, input);
+      checkButtonValidity(config, form, addButtonSave);
     });
   });
 }
 
-enableValidation();
+enableValidation({
+  formSelector: '.popup__form_add',
+  editFormSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  disabledButtonClass: 'popup__button_inactive',
+  inputErrorClass: 'popup__input-error_active'
+});
 
 window.addEventListener('keydown', (evt) => {
   if(evt.key === 'Escape') {
