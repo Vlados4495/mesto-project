@@ -41,7 +41,8 @@
     <div id="popup-edit" class="popup">
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__form" name="popup-form" novalidate>
+        <form class="popup__form form" name="popup-form" novalidate>
+          <fieldset class="form__set">
           <input
             type="text"
             class="popup__input"
@@ -67,6 +68,7 @@
           />
           <span id="input-popup-subtitle-error" class="popup__input_type_error"></span>
           <button type="submit" class="popup__button">Сохранить</button>
+          </fieldset>
         </form>
         <button type="button" id="popup__close-btn" class="popup__closed"></button>
       </div>
@@ -75,7 +77,8 @@
     <div id="popup-add" class="popup">
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
-        <form class="popup__form_add" name="popup-form" novalidate>
+        <form class="popup__form_add form" name="popup-form" novalidate>
+          <fieldset class="form__set">
           <input
             type="text"
             class="popup__input"
@@ -103,6 +106,7 @@
           <button type="submit" id="popup-add_submit" class="popup__button">
             Создать
           </button>
+          </fieldset>
         </form>
         <button type="button" id="popup__close" class="popup__closed"></button>
       </div>

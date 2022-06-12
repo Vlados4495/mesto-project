@@ -1,5 +1,5 @@
 import { openPopup, closePopup } from '../components/modal.js'
-import { cardImagePopup, cardsContainer, cardImageLink, cardImageTitle, placeName, placeLink, popupAddImage } from '../components/variables.js'; 
+import { cardImagePopup, cardsContainer, cardImageLink, cardImageTitle, placeName, placeLink, popupAddImage , profileFormAdd} from '../components/variables.js'; 
 
 export const initialCards = [
     {
@@ -69,9 +69,12 @@ export const initialCards = [
   }
 
   
-export function addButtonSaved(evt) {
+export function handleAddFormSubmit(evt) {
     addCard(placeName.value, placeLink.value);
     evt.preventDefault();
+    profileFormAdd.reset();
+    const btn = document.querySelector('.popup__button');
+    btn.disabled = true;
     closePopup(popupAddImage);
   }
   

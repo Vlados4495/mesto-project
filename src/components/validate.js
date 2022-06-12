@@ -1,78 +1,76 @@
-import { addButtonSave, editButtonSave } from '../components/variables.js'; 
+const showInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+  inputElement.classList.add('popup__input-error_active');
+  errorElement.textContent = inputElement.validationMessage;
+};
 
-export const formSubmit = (event) => {
-    event.preventDefault();
-  };
-  //Попап добавления места, проверяем валидность
-  export const checkInputValidity = (config, form, input) => {
-    const errorMessage = form.querySelector(`#${input.id}-error`);
-    if (input.validity.valid) {
-      errorMessage.textContent = "";
-      input.classList.remove(config.inputErrorClass);
-    } else {
-      errorMessage.textContent = input.validationMessage;
-      input.classList.add(config.inputErrorClass);
-    }
-  };
-  //Ред профиль валидность
-  export const checkEditInputValidity = (config, editForm, input) => {
-    const errorMessage = editForm.querySelector(`#${input.id}-error`);
-    if (input.validity.valid) {
-      errorMessage.textContent = "";
-      input.classList.remove(config.inputErrorClass);
-    } else {
-      errorMessage.textContent = input.validationMessage;
-      input.classList.add(config.inputErrorClass);
-    }
-  };
-  
-  export const checkButtonValidity = (config, form, addButtonSave) => {
-    if (form.checkValidity()) {
-      addButtonSave.removeAttribute("disabled", "");
-      addButtonSave.classList.remove(config.disabledButtonClass);
-    } else {
-      addButtonSave.setAttribute("disabled", "");
-      addButtonSave.classList.add(config.disabledButtonClass);
-    }
-  };
-  
-  export const checkEditButtonValidity = (config, editForm, editButtonSave) => {
-    if (editForm.checkValidity()) {
-      editButtonSave.removeAttribute("disabled", "");
-      editButtonSave.classList.remove(config.disabledButtonClass);
-    } else {
-      editButtonSave.setAttribute("disabled", "");
-      editButtonSave.classList.add(config.disabledButtonClass);
-    }
-  };
-  
-  export function enableValidation(config) {
-    //Подключаем формы
-    const form = document.querySelector(config.formSelector);
-    const editForm = document.querySelector(config.editFormSelector);
-  
-    form.addEventListener("submit", formSubmit);
-    editForm.addEventListener("submit", formSubmit);
-  
-    const editFormInputs = editForm.querySelectorAll(config.inputSelector);
-  
-    const inputs = form.querySelectorAll(config.inputSelector);
-  
-  
-    checkButtonValidity(config, form, addButtonSave);
-    checkEditButtonValidity(config, editForm, editButtonSave);
-  
-    editFormInputs.forEach((input) => {
-      input.addEventListener("input", (event) => {
-        checkEditInputValidity(config, editForm, input);
-        checkEditButtonValidity(config, editForm, editButtonSave);
-      });
-    });
-  
-    inputs.forEach((input) => {
-      input.addEventListener("input", (event) => {
-        checkInputValidity(config, form, input);
-        checkButtonValidity(config, form, addButtonSave);
-      });
-    });
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+  inputElement.classList.remove('popup__input-error_active');
+  errorElement.textContent = '';
+};
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement);
+  } else {
+    hideInputError(formElement, inputElement);
   }
+};
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  const buttonElement = formElement.querySelector('.popup__button');
+
+  // чтобы проверить состояние кнопки в самом начале
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+      // чтобы проверять его при изменении любого из полей
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+  return !inputElement.validity.valid;
+});
+};
+
+const toggleButtonState  = (inputList, buttonElement) => {
+   
+  if (hasInvalidInput(inputList)) {
+    // сделай кнопку неактивной
+    buttonElement.classList.add('popup__button_inactive');
+    buttonElement.setAttribute("disabled", "");
+  } else {
+        // иначе сделай кнопку активной
+    buttonElement.classList.remove('popup__button_inactive');
+    buttonElement.removeAttribute("disabled", "");
+  }
+};
+
+
+export const enableValidation = ({formListSelector, formSet}) => {
+  const formList = Array.from(document.querySelectorAll(formListSelector));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      
+    });
+
+   
+    const fieldsetList = Array.from(formElement.querySelectorAll(formSet));
+
+fieldsetList.forEach((fieldSet) => {
+  setEventListeners(fieldSet);
+});
+  });
+  
+  
+};
+
+
