@@ -42,6 +42,7 @@ editButton.addEventListener("click", openProfilePopup);
 
 //Валидация формы
 
+
  enableValidation({
     formListSelector: '.form',
     formSet: '.form__set',

@@ -73,8 +73,9 @@ export function handleAddFormSubmit(evt) {
     addCard(placeName.value, placeLink.value);
     evt.preventDefault();
     profileFormAdd.reset();
-    const btn = document.querySelector('.popup__button');
+    const btn = profileFormAdd.querySelector('.popup__button');
     btn.disabled = true;
+    btn.classList.add('popup__button_inactive');
     closePopup(popupAddImage);
   }
   
