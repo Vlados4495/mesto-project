@@ -2,4 +2,7 @@
   border-radius: 50%;
   width: 120px;
   height: 120px;
+  cursor: pointer;
+  object-fit: cover;
+  margin:0;
 }

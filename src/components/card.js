@@ -1,34 +1,8 @@
 import { openPopup, closePopup } from '../components/modal.js'
 import { cardImagePopup, cardsContainer, cardImageLink, cardImageTitle, placeName, placeLink, popupAddImage , profileFormAdd} from '../components/variables.js'; 
+import { addNewCard, addLike, removeLike, deleteCard} from '../components/api.js'
 
-export const initialCards = [
-    {
-      name: "Архыз",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-    },
-    {
-      name: "Челябинская область",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-    },
-    {
-      name: "Иваново",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-    },
-    {
-      name: "Камчатка",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-    },
-    {
-      name: "Холмогорский район",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-    },
-    {
-      name: "Байкал",
-      link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-    },
-  ];
-
- export function createCard(item) {
+ export function createCard(link, name, owner, id, likes) {
     const cardsTemplate = document.querySelector("#cards__template").content;
     const cardsElement = cardsTemplate
       .querySelector(".cards__item")
@@ -38,39 +12,64 @@ export const initialCards = [
     const cardsLikeBtn = cardsElement.querySelector(".cards__like");
     const cardsDeleteBtn = cardsElement.querySelector("#delete_button");
   
-    cardsImg.src = item["link"];
-    cardsImg.alt = item["name"];
-    cardsTitle.textContent = item["name"];
-  
+    
+
+
+    cardsImg.src = link;
+    cardsImg.alt = name;
+    cardsImg.id = id
+    cardsTitle.textContent = name;
+
+    const likesCounter = cardsElement.querySelector(".cards__likes-counter");
+
     cardsLikeBtn.addEventListener("click", function (evt) {
-      evt.target.classList.toggle("cards__like_active");
+      // evt.target.classList.toggle("cards__like_active");
+
+      if(!evt.target.classList.contains('cards__like_active')) {
+        evt.target.classList.add('cards__like_active');
+        addLike(id, likesCounter);
+      } else {
+        evt.target.classList.remove('cards__like_active');
+        removeLike(id, likesCounter);
+      }
     });
+    
+likesCounter.textContent = likes;
+
+const ownerId = owner;
+if(ownerId === 'e262b97f0d05a1bc5248b5ec') {
+ 
+  cardsDeleteBtn.style.display = 'block';
+ 
+}
+
+
+
     cardsDeleteBtn.addEventListener("click", function () {
       cardsElement.remove();
+      deleteCard(id);
     });
   
     cardsImg.addEventListener("click", function () {
       openPopup(cardImagePopup);
-      cardImageLink.src = item["link"];
-      cardImageLink.alt = item["name"];
-      cardImageTitle.textContent = item["name"];
+      cardImageLink.src = link;
+      cardImageLink.alt = name;
+      cardImageTitle.textContent = name;
     });
   
     return cardsElement;
   } 
 
-  export function addCard(nameValue, linkValue) {
-    const item = {
-      name: nameValue,
-      link: linkValue,
-    };
-    const cardsElement = createCard(item);
+  export function addCard(link, name) {
+    
+    const cardsElement = createCard(name, link);
     cardsContainer.prepend(cardsElement);
   }
 
   
 export function handleAddFormSubmit(evt) {
     addCard(placeName.value, placeLink.value);
+    addNewCard(placeName.value, placeLink.value);
     evt.preventDefault();
     profileFormAdd.reset();
     const btn = profileFormAdd.querySelector('.popup__button');
@@ -79,3 +78,4 @@ export function handleAddFormSubmit(evt) {
     closePopup(popupAddImage);
   }
   
+ 

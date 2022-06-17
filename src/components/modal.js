@@ -1,5 +1,6 @@
-import { nameInput, jobInput, profileName, jobName, profilePopup } from '../components/variables.js'; 
+import { nameInput, jobInput, profileName, jobName, profilePopup, profileAvatar, avatarLink, avatarPopup } from '../components/variables.js'; 
 
+import { changeAvatar , editUserData} from './api.js';
 
 //Открываем попап
 export function openPopup(popup) {
@@ -19,10 +20,22 @@ export function openPopup(popup) {
   
     profileName.textContent = nameInput.value;
     jobName.textContent = jobInput.value;
+    editUserData(nameInput.value, jobInput.value)
   
     closePopup(profilePopup);
   }
   
+  export function handleProfileAvatarSubmit(evt) {
+
+    evt.preventDefault();
+  
+  
+    profileAvatar.src = avatarLink.value;
+    changeAvatar(avatarLink.value);
+  
+    closePopup(avatarPopup);
+  }
+
   //Заполненная форрма в профиле
  export function openProfilePopup() {
     nameInput.value = profileName.textContent;
