@@ -6,27 +6,20 @@ import { enableValidation } from '../components/validate.js'
 
 import { getInitialCards, getUserData} from '../components/api.js'
 
-
-  getUserData()
-  .then(data => {
+Promise.all([getUserData(), getInitialCards()])
+  .then(([data, res]) => {
     profileName.textContent = data.name;
     jobName.textContent = data.about;
     profileAvatar.src = data.avatar;
+    res.forEach(function(res) {
+      const cardElement = createCard(res.link, res.name, res.owner._id, res._id, res.likes.length);
+      cardsContainer.append(cardElement);
+    })
   })
   .catch(err => {
     console.log(err);
-  })
+  });
 
-  
-getInitialCards()
-.then((res) => {
-  res.forEach(function(res) {
-      const cardElement = createCard(res.link, res.name, res.owner._id, res._id, res.likes.length);
-      cardsContainer.append(cardElement);
-    })})
-    .catch(err => {
-      console.log(err);
-    });
 
 editButton.addEventListener("click", function () {
   openPopup(profilePopup);
