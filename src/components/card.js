@@ -1,9 +1,11 @@
 import { openPopup, closePopup } from '../components/modal.js'
-import { cardImagePopup, cardsContainer, cardImageLink, cardImageTitle, placeName, placeLink, popupAddImage , profileFormAdd, confirmDeletePopup} from '../components/variables.js'; 
+import { cardImagePopup, cardsContainer, cardImageLink, cardImageTitle, placeName, placeLink, popupAddImage , profileFormAdd, confirmDeletePopup, cardsTemplate} from '../components/variables.js'; 
 import { addNewCard, addLike, removeLike, deleteCard} from '../components/api.js'
 
+
+
  export function createCard(link, name, owner, id, likes) {
-    const cardsTemplate = document.querySelector("#cards__template").content;
+   
     const cardsElement = cardsTemplate
       .querySelector(".cards__item")
       .cloneNode(true);
@@ -42,8 +44,13 @@ if(ownerId === 'e262b97f0d05a1bc5248b5ec') {
  
   cardsDeleteBtn.style.display = 'block';
   cardsDeleteBtn.addEventListener("click", function () {
-    cardsElement.remove();
-    deleteCard(id);
+    deleteCard(id)
+      .then(res => {
+      cardsElement.remove();
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
     // openPopup(confirmDeletePopup)
 })
   // const submitDeleteBtn = confirmDeletePopup.querySelector('.popup__button')
