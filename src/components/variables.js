@@ -34,6 +34,7 @@ export const profileFormAdd = document.querySelector(".popup__form_add");
 
 export const profileForm = document.querySelector(".popup__form"); 
 export const profileAvatarForm = document.querySelector(".popup__form_avatar");
+export const profileAvatarSubmitBtn = document.querySelector(".popup__avatar_submit")
 
 // Находим поля формы в DOM
 export const nameInput = document.querySelector("#input-popup-title");

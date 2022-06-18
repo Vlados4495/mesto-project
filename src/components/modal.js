@@ -1,4 +1,4 @@
-import { nameInput, jobInput, profileName, jobName, profilePopup, profileAvatar, avatarLink, avatarPopup, confirmDeletePopup } from '../components/variables.js'; 
+import { nameInput, jobInput, profileName, jobName, profilePopup, profileAvatar, avatarLink, avatarPopup, editButtonSave, profileAvatarSubmitBtn} from '../components/variables.js'; 
 
 import { changeAvatar , editUserData} from './api.js';
 
@@ -14,26 +14,37 @@ export function openPopup(popup) {
   }
   
  export function handleProfileFormSubmit(evt) {
-
+  renderLoading(true, editButtonSave)
     evt.preventDefault();
   
   
-    profileName.textContent = nameInput.value;
-    jobName.textContent = jobInput.value;
+   
     editUserData(nameInput.value, jobInput.value)
-  
-    closePopup(profilePopup);
+    .then(res => {
+      profileName.textContent = nameInput.value;
+      jobName.textContent = jobInput.value;
+      closePopup(profilePopup);
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
+   
   }
   
   export function handleProfileAvatarSubmit(evt) {
-
+    renderLoading(true, profileAvatarSubmitBtn)
     evt.preventDefault();
+     changeAvatar(avatarLink.value)
+    .then(res => {
+      profileAvatar.src = avatarLink.value;
+      closePopup(avatarPopup);
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
+   
   
-  
-    profileAvatar.src = avatarLink.value;
-    changeAvatar(avatarLink.value);
-  
-    closePopup(avatarPopup);
+    
   }
 
   //Заполненная форрма в профиле
@@ -48,3 +59,10 @@ export function openPopup(popup) {
       closePopup(openedPopup);
     }
   }
+
+  function renderLoading(isLoading, btnSubmit) {
+    if (isLoading) {
+      btnSubmit.textContent = 'Сохранение...'
+    } else {
+      btnSubmit.textContent = 'Сохранить'
+    } }
