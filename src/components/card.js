@@ -1,7 +1,7 @@
 import { openPopup, closePopup } from '../components/modal.js'
 import { cardImagePopup, cardsContainer, cardImageLink, cardImageTitle, placeName, placeLink, popupAddImage , profileFormAdd, confirmDeletePopup, cardsTemplate} from '../components/variables.js'; 
 import { addNewCard, addLike, removeLike, deleteCard} from '../components/api.js'
-
+import { userId} from '../scripts/index.js'
 
 
  export function createCard(link, name, owner, id, likes) {
@@ -26,21 +26,31 @@ import { addNewCard, addLike, removeLike, deleteCard} from '../components/api.js
     likesCounter.textContent = likes;
 
     cardsLikeBtn.addEventListener("click", function (evt) {
-      // evt.target.classList.toggle("cards__like_active");
-
-      if(!evt.target.classList.contains('cards__like_active')) {
-        evt.target.classList.add('cards__like_active');
-        addLike(id, likesCounter);
+        if(!evt.target.classList.contains('cards__like_active')) {
+       
+        addLike(id, likesCounter)
+        .then(res => {
+          evt.target.classList.add('cards__like_active')
+        })
+        .catch((err) => {
+          console.log(err.message)
+        })
       } else {
-        evt.target.classList.remove('cards__like_active');
-        removeLike(id, likesCounter);
+       
+        removeLike(id, likesCounter)
+        .then(res => {
+          evt.target.classList.remove('cards__like_active')
+        })
+        .catch((err) => {
+          console.log(err.message)
+        })
       }
     });
     
 
 
 const ownerId = owner;
-if(ownerId === 'e262b97f0d05a1bc5248b5ec') {
+if(ownerId=== userId) {
  
   cardsDeleteBtn.style.display = 'block';
   cardsDeleteBtn.addEventListener("click", function () {
@@ -82,12 +92,18 @@ if(ownerId === 'e262b97f0d05a1bc5248b5ec') {
 
   
 export function handleAddFormSubmit(evt) {
-    addCard(placeLink.value, placeName.value);
-    addNewCard(placeLink.value, placeName.value);
-    evt.preventDefault();
-    profileFormAdd.reset();
-    const btn = profileFormAdd.querySelector('.popup__button');
-    btn.disabled = true;
-    btn.classList.add('popup__button_inactive');
-    closePopup(popupAddImage);
-    }
+    
+    addNewCard(placeLink.value, placeName.value)
+    .then(res => {
+      addCard(placeLink.value, placeName.value)
+      evt.preventDefault();
+      profileFormAdd.reset();
+      const btn = profileFormAdd.querySelector('.popup__button');
+      btn.disabled = true;
+      btn.classList.add('popup__button_inactive');
+      closePopup(popupAddImage);
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
+}

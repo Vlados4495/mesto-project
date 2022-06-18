@@ -6,11 +6,14 @@ import { enableValidation } from '../components/validate.js'
 
 import { getInitialCards, getUserData} from '../components/api.js'
 
+export let userId;
+
 Promise.all([getUserData(), getInitialCards()])
   .then(([data, res]) => {
     profileName.textContent = data.name;
     jobName.textContent = data.about;
     profileAvatar.src = data.avatar;
+    userId = data._id
     res.forEach(function(res) {
       const cardElement = createCard(res.link, res.name, res.owner._id, res._id, res.likes.length);
       cardsContainer.append(cardElement);
