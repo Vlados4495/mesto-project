@@ -30,7 +30,7 @@ const config = {
    
   }
 
-  export const addNewCard = (name, link) => {
+  export const addNewCard = (link, name) => {
     return fetch(`${config.baseUrl}/cards/`, {
       method: 'POST',
       headers: config.headers,

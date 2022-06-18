@@ -1,4 +1,4 @@
-import { nameInput, jobInput, profileName, jobName, profilePopup, profileAvatar, avatarLink, avatarPopup } from '../components/variables.js'; 
+import { nameInput, jobInput, profileName, jobName, profilePopup, profileAvatar, avatarLink, avatarPopup, confirmDeletePopup } from '../components/variables.js'; 
 
 import { changeAvatar , editUserData} from './api.js';
 

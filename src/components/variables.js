@@ -13,7 +13,8 @@ export const popupAddImageClosed = document.getElementById("popup__close"); //К
 
 export const cardImagePopup = document.querySelector(".popup__card"); // Попап с картинкой
 export const cardImagePopupClose = document.querySelector("#popup__card_close"); //Кнопка закрыть попап
-export const popups = document.querySelectorAll('.popup')
+export const popups = document.querySelectorAll('.popup');
+export const confirmDeletePopup = document.querySelector('#popup__confirm-delete');
 
 export const profileName = document.querySelector(".profile__title");
 export const jobName = document.querySelector(".profile__subtitle");

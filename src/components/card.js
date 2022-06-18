@@ -1,5 +1,5 @@
 import { openPopup, closePopup } from '../components/modal.js'
-import { cardImagePopup, cardsContainer, cardImageLink, cardImageTitle, placeName, placeLink, popupAddImage , profileFormAdd} from '../components/variables.js'; 
+import { cardImagePopup, cardsContainer, cardImageLink, cardImageTitle, placeName, placeLink, popupAddImage , profileFormAdd, confirmDeletePopup} from '../components/variables.js'; 
 import { addNewCard, addLike, removeLike, deleteCard} from '../components/api.js'
 
  export function createCard(link, name, owner, id, likes) {
@@ -21,6 +21,7 @@ import { addNewCard, addLike, removeLike, deleteCard} from '../components/api.js
     cardsTitle.textContent = name;
 
     const likesCounter = cardsElement.querySelector(".cards__likes-counter");
+    likesCounter.textContent = likes;
 
     cardsLikeBtn.addEventListener("click", function (evt) {
       // evt.target.classList.toggle("cards__like_active");
@@ -34,21 +35,27 @@ import { addNewCard, addLike, removeLike, deleteCard} from '../components/api.js
       }
     });
     
-likesCounter.textContent = likes;
+
 
 const ownerId = owner;
 if(ownerId === 'e262b97f0d05a1bc5248b5ec') {
  
   cardsDeleteBtn.style.display = 'block';
- 
+  cardsDeleteBtn.addEventListener("click", function () {
+    cardsElement.remove();
+    deleteCard(id);
+    // openPopup(confirmDeletePopup)
+})
+  // const submitDeleteBtn = confirmDeletePopup.querySelector('.popup__button')
+  // submitDeleteBtn.addEventListener("click", function () {
+  //     cardsElement.remove();
+  //     deleteCard(id);
+  //     closePopup(confirmDeletePopup);
+  // })
 }
 
 
-
-    cardsDeleteBtn.addEventListener("click", function () {
-      cardsElement.remove();
-      deleteCard(id);
-    });
+   
   
     cardsImg.addEventListener("click", function () {
       openPopup(cardImagePopup);
@@ -60,22 +67,20 @@ if(ownerId === 'e262b97f0d05a1bc5248b5ec') {
     return cardsElement;
   } 
 
-  export function addCard(link, name) {
+  export function addCard(link, name, owner, id, likes) {
     
-    const cardsElement = createCard(name, link);
+     const cardsElement = createCard(link, name, owner, id, likes);
     cardsContainer.prepend(cardsElement);
   }
 
   
 export function handleAddFormSubmit(evt) {
-    addCard(placeName.value, placeLink.value);
-    addNewCard(placeName.value, placeLink.value);
+    addCard(placeLink.value, placeName.value);
+    addNewCard(placeLink.value, placeName.value);
     evt.preventDefault();
     profileFormAdd.reset();
     const btn = profileFormAdd.querySelector('.popup__button');
     btn.disabled = true;
     btn.classList.add('popup__button_inactive');
     closePopup(popupAddImage);
-  }
-  
- 
+    }

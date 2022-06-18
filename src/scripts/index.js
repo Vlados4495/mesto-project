@@ -1,7 +1,7 @@
 import '../styles/style.css';
 import { editButton, addButton, profilePopup, popups, popupAddImage, cardsContainer,  profileFormAdd , profileForm, editAvatarButton, avatarPopup, profileAvatarForm, profileName, jobName, profileAvatar} from '../components/variables.js'; 
 import { openPopup, closePopup , handleProfileFormSubmit, openProfilePopup, handleProfileAvatarSubmit} from '../components/modal.js'
-import { handleAddFormSubmit, createCard} from '../components/card.js'
+import { handleAddFormSubmit, createCard, handleConfirmDelete} from '../components/card.js'
 import { enableValidation } from '../components/validate.js'
 
 import { getInitialCards, getUserData} from '../components/api.js'
@@ -23,7 +23,10 @@ getInitialCards()
   res.forEach(function(res) {
       const cardElement = createCard(res.link, res.name, res.owner._id, res._id, res.likes.length);
       cardsContainer.append(cardElement);
-    })});;
+    })})
+    .catch(err => {
+      console.log(err);
+    });
 
 editButton.addEventListener("click", function () {
   openPopup(profilePopup);
@@ -67,6 +70,8 @@ profileFormAdd.addEventListener("submit", handleAddFormSubmit);
 profileForm.addEventListener("submit", handleProfileFormSubmit);
 
 profileAvatarForm.addEventListener("submit", handleProfileAvatarSubmit);
+
+// confirmDeletePopup.addEventListener("submit", handleConfirmDelete);
 
 editButton.addEventListener("click", openProfilePopup);
 
