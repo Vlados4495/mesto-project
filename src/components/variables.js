@@ -20,6 +20,7 @@ export const profileName = document.querySelector(".profile__title");
 export const jobName = document.querySelector(".profile__subtitle");
 export const profileAvatar = document.querySelector(".profile__avatar")
 
+export const cardsTemplate = document.querySelector("#cards__template").content;
 export const cardsContainer = document.querySelector(".cards__items");
 
 export const cardImageLink = document.querySelector(".popup__card_image");
