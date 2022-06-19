@@ -29,7 +29,6 @@ import { userId} from '../scripts/index.js'
         cardsLikeBtn.classList.add('cards__like_active');
     }
 
-  console.log(likes)
   
     cardsLikeBtn.addEventListener("click", function (evt) {
         if(!evt.target.classList.contains('cards__like_active')) {
