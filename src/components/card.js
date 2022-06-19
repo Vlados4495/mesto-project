@@ -23,8 +23,14 @@ import { userId} from '../scripts/index.js'
     cardsTitle.textContent = name;
 
     const likesCounter = cardsElement.querySelector(".cards__likes-counter");
-    likesCounter.textContent = likes;
+    likesCounter.textContent = likes.length;
 
+    if(likes.some(item => item._id === userId)) {
+        cardsLikeBtn.classList.add('cards__like_active');
+    }
+
+  console.log(likes)
+  
     cardsLikeBtn.addEventListener("click", function (evt) {
         if(!evt.target.classList.contains('cards__like_active')) {
        
@@ -49,8 +55,8 @@ import { userId} from '../scripts/index.js'
     
 
 
-const ownerId = owner;
-if(ownerId=== userId) {
+
+if(owner=== userId) {
  
   cardsDeleteBtn.style.display = 'block';
   cardsDeleteBtn.addEventListener("click", function () {
@@ -63,6 +69,7 @@ if(ownerId=== userId) {
     })
     // openPopup(confirmDeletePopup)
 })
+
   // const submitDeleteBtn = confirmDeletePopup.querySelector('.popup__button')
   // submitDeleteBtn.addEventListener("click", function () {
   //     cardsElement.remove();

@@ -15,7 +15,7 @@ Promise.all([getUserData(), getInitialCards()])
     profileAvatar.src = data.avatar;
     userId = data._id
     res.forEach(function(res) {
-      const cardElement = createCard(res.link, res.name, res.owner._id, res._id, res.likes.length);
+      const cardElement = createCard(res.link, res.name, res.owner._id, res._id, res.likes);
       cardsContainer.append(cardElement);
     })
   })
