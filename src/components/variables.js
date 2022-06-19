@@ -31,6 +31,7 @@ export const placeLink = document.querySelector("#input-popup-link");
 export const avatarLink = document.querySelector(".popup__avatar");
 
 export const profileFormAdd = document.querySelector(".popup__form_add");
+export const btn = profileFormAdd.querySelector('.popup__button');
 
 export const profileForm = document.querySelector(".popup__form"); 
 export const profileAvatarForm = document.querySelector(".popup__form_avatar");

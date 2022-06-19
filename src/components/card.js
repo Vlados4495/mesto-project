@@ -1,5 +1,5 @@
 import { openPopup, closePopup } from '../components/modal.js'
-import { cardImagePopup, cardsContainer, cardImageLink, cardImageTitle, placeName, placeLink, popupAddImage , profileFormAdd, confirmDeletePopup, cardsTemplate} from '../components/variables.js'; 
+import { cardImagePopup, cardsContainer, cardImageLink, cardImageTitle, placeName, placeLink, popupAddImage , profileFormAdd, confirmDeletePopup, cardsTemplate, btn} from '../components/variables.js'; 
 import { addNewCard, addLike, removeLike, deleteCard} from '../components/api.js'
 import { userId} from '../scripts/index.js'
 
@@ -95,10 +95,10 @@ export function handleAddFormSubmit(evt) {
     
     addNewCard(placeLink.value, placeName.value)
     .then(res => {
-      addCard(placeLink.value, placeName.value)
+      addCard(res.link, res.name, res.owner._id, res._id, res.likes);
       evt.preventDefault();
       profileFormAdd.reset();
-      const btn = profileFormAdd.querySelector('.popup__button');
+    
       btn.disabled = true;
       btn.classList.add('popup__button_inactive');
       closePopup(popupAddImage);
