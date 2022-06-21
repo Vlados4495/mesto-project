@@ -5,4 +5,4 @@
 
 HTML5, CSS3, Flexbox, GRID Layout, BEM , Responsive.
 
-Ссылка на GitHub: https://github.com/Vlados4495/mesto-project
+Ссылка на GitHub Pages: https://vlados4495.github.io/mesto-project/
