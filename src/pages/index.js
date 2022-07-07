@@ -1,10 +1,10 @@
-import '../styles/style.css';
+import '../pages/index.css';
 import { editButton, addButton, profilePopup, popups, popupAddImage, cardsContainer,  profileFormAdd , profileForm, editAvatarButton, avatarPopup, profileAvatarForm, profileName, jobName, profileAvatar} from '../components/variables.js'; 
 import { openPopup, closePopup , handleProfileFormSubmit, openProfilePopup, handleProfileAvatarSubmit} from '../components/modal.js'
 import { handleAddFormSubmit, createCard, handleConfirmDelete} from '../components/card.js'
 import { enableValidation } from '../components/validate.js'
 
-import { getInitialCards, getUserData} from '../components/api.js'
+import Api from '../components/api.js'
 
 export let userId;
 

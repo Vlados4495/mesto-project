@@ -1,92 +1,98 @@
-
-const config = {
-    baseUrl: 'https://nomoreparties.co/v1/plus-cohort-11',
-    headers: {
-      authorization: '2ce78970-65cf-4453-9ecd-08fb86edda40',
-      'Content-Type': 'application/json'
-    }
+export default class Api {
+  constructor(options) {
+    this._baseUrl = options.baseUrl
+    this._headers = options.headers
   }
 
-  function checkResponse(res) {
+  /* Проверяем ответ от сервера */
+  _checkResponse(res) {
     if (res.ok) {
       return res.json()
     }
     return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
   }
 
- export const getUserData = () => {
-    return fetch(`${config.baseUrl}/users/me`, {
-      headers: config.headers,
+  /* Получение инфо о пользователе */
+    getUserData() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
     })
-    .then(res => checkResponse(res))
+    .then(res => _checkResponse(res))
 
   };
 
-  export const getInitialCards = (res) => {
-    return fetch(`${config.baseUrl}/cards`, {
-      headers: config.headers,
+  /* Получение карточек с сервера */
+    getInitialCards(res){
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
     })
-    .then(res => checkResponse(res))
+    .then(res => _checkResponse(res))
    
   }
+/* Добавляем новую карточку на сервер */
 
-  export const addNewCard = (link, name) => {
-    return fetch(`${config.baseUrl}/cards/`, {
+    addNewCard(link, name) {
+    return fetch(`${this._baseUrl}/cards/`, {
       method: 'POST',
-      headers: config.headers,
+      headers: this._headers,
       body: JSON.stringify({
         name: name,
         link: link,
       })
     })
-    .then(res => checkResponse(res))
+    .then(res => _checkResponse(res))
   }
 
-  export const deleteCard = (cardId) => {
-    return fetch(`${config.baseUrl}/cards/${cardId}`, {
+  /* Удаляем карточку с сервера */
+    deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: config.headers,
+      headers: this._headers,
     })
-    .then(res => checkResponse(res))
+    .then(res => _checkResponse(res))
   }
 
-  export const addLike = (cardId, counter) => {
-    return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+  /* Добавляем лайк на публикации */
+    addLike(cardId, counter) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
-      headers: config.headers,
+      headers: this._headers,
     })
-    .then(res => checkResponse(res))
+    .then(res => _checkResponse(res))
     .then((res) => {
       counter.textContent = res.likes.length;
     })
   }
 
-  export const removeLike = (cardId, counter) => {
-    return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+  /* Убираем лайк на публикации */
+  removeLike(cardId, counter) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
-      headers: config.headers,
+      headers: this._headers,
     })
-    .then(res => checkResponse(res))
+    .then(res => _checkResponse(res))
     .then((res) => {
       counter.textContent = res.likes.length;
     })
   }
 
-  export const changeAvatar = (avatar) => {
-    return fetch(`${config.baseUrl}/users/me/avatar`, {
+/* Меняем аватарку профиля */
+    changeAvatar(avatar) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: config.headers,
+      headers: this._headers,
       body: JSON.stringify({
         avatar: avatar
       })
     })
-    .then(res => checkResponse(res))
+    .then(res => _checkResponse(res))
   }
 
-  export const editUserData = (name, about) => {
-    return fetch(`${config.baseUrl}/users/me`, {
+  /* Редатируем профиль */
+    editUserData(name, about) {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: config.headers,
+      headers: this._headers,
       body: JSON.stringify({
         name: name,
         about: about
@@ -94,3 +100,14 @@ const config = {
     })
     .then(res => checkResponse(res))
   }
+
+}
+
+const api = new Api({
+    baseUrl: 'https://nomoreparties.co/v1/plus-cohort-11',
+    headers: {
+      authorization: '2ce78970-65cf-4453-9ecd-08fb86edda40',
+      'Content-Type': 'application/json'
+    }
+  })
+  
