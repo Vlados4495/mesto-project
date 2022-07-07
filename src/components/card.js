@@ -1,7 +1,29 @@
 import { openPopup, closePopup } from '../components/modal.js'
 import { cardImagePopup, cardsContainer, cardImageLink, cardImageTitle, placeName, placeLink, popupAddImage , profileFormAdd, confirmDeletePopup, cardsTemplate, btn} from '../components/variables.js'; 
 import { addNewCard, addLike, removeLike, deleteCard} from '../components/api.js'
-import { userId} from '../scripts/index.js'
+import { userId} from '../pages/index.js'
+
+export default class card {
+  constructor(link, name, owner, id, likes) {
+    this.link = link
+    this.name = name
+    this.owner = owner
+    this.id = id
+    this.likes = likes
+  }
+
+  _getTemplate() {
+    const cardsElement = cardsTemplate
+    .querySelector(".cards__item")
+    .cloneNode(true)
+
+    return cardsElement
+ }
+
+    generateCard() {
+      
+  }
+}
 
 
  export function createCard(link, name, owner, id, likes) {
