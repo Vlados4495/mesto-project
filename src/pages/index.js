@@ -4,7 +4,9 @@ import { openPopup, closePopup , handleProfileFormSubmit, openProfilePopup, hand
 import { handleAddFormSubmit, createCard, handleConfirmDelete} from '../components/card.js'
 import { enableValidation } from '../components/validate.js'
 
-import Api from '../components/api.js'
+import Api from '../components/api.js';
+import UserInfo from '../components/userInfo.js';
+import Sections from '../components/Section';
 
 export let userId;
 
@@ -23,7 +25,7 @@ Promise.all([getUserData(), getInitialCards()])
     console.log(err);
   });
 
-
+   
 editButton.addEventListener("click", function () {
   openPopup(profilePopup);
 });
