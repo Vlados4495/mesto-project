@@ -1,8 +1,8 @@
-class Section {
+export class Section {
     constructor({items, renderer}, cardsContainer) {
       this._initialArray = items;
       this._renderer = renderer;
-      this._container = document.querySelector(cardsContainer);
+      this._container = cardsContainer;
     }
   
     renderItems() {
@@ -14,4 +14,3 @@ class Section {
     }
   }
   
-  export default Section;
