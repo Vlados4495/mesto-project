@@ -12,6 +12,15 @@ export let userId;
 
 const api = new Api(config);
 
+function getUserApi() {
+  return api.getUserData()
+}
+
+const userInfo = new UserInfo({profileName, jobName, profileAvatar}, getUserApi)
+  userInfo.getUserInfo()
+    .then(res => console.log(res))
+
+
 
 Promise.all([api.getUserData(), api.getInitialCards()])
   .then(([data, res]) => {
