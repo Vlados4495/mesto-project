@@ -18,24 +18,29 @@ function getUserApi() {
 
 const userInfo = new UserInfo({profileName, jobName, profileAvatar}, getUserApi)
   userInfo.getUserInfo()
-    .then(res => console.log(res))
-
-
-
-Promise.all([api.getUserData(), api.getInitialCards()])
-  .then(([data, res]) => {
-    profileName.textContent = data.name;
-    jobName.textContent = data.about;
-    profileAvatar.src = data.avatar;
-    userId = data._id
-    res.forEach(function(res) {
-      const cardElement = createCard(res.link, res.name, res.owner._id, res._id, res.likes);
-      cardsContainer.append(cardElement);
+    .then((res) => {
+      profileName.textContent = res.name;
+      jobName.textContent = res.about;
+      profileAvatar.src = res.avatar;
+      userId = res._id
     })
-  })
-  .catch(err => {
-    console.log(err);
-  });
+
+
+
+// Promise.all([api.getUserData(), api.getInitialCards()])
+//   .then(([data, res]) => {
+//     profileName.textContent = data.name;
+//     jobName.textContent = data.about;
+//     profileAvatar.src = data.avatar;
+//     userId = data._id
+//     res.forEach(function(res) {
+//       const cardElement = createCard(res.link, res.name, res.owner._id, res._id, res.likes);
+//       cardsContainer.append(cardElement);
+//     })
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });
 
    
 editButton.addEventListener("click", function () {
