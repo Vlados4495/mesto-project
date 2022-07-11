@@ -1,7 +1,15 @@
-export default class Api {
-  constructor(options) {
-    this._baseUrl = options.baseUrl
-    this._headers = options.headers
+export const config = {
+  baseUrl: "https://nomoreparties.co/v1/plus-cohort-11",
+  headers: {
+    authorization: "2ce78970-65cf-4453-9ecd-08fb86edda40",
+    "Content-Type": "application/json",
+  }
+};
+
+export class Api {
+  constructor({baseUrl, headers}) {
+    this.baseUrl = baseUrl;
+    this.headers = headers;
   }
 
   /* Проверяем ответ от сервера */
@@ -14,63 +22,62 @@ export default class Api {
 
   /* Получение инфо о пользователе */
     getUserData() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+    return fetch(`${this.baseUrl}/users/me`, {
+      headers: this.headers,
     })
-    .then(res => _checkResponse(res))
-
-  };
+    .then(res => this._checkResponse(res))
+};
 
   /* Получение карточек с сервера */
     getInitialCards(res){
-    return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
+    return fetch(`${this.baseUrl}/cards`, {
+      headers: this.headers ,
     })
-    .then(res => _checkResponse(res))
-   
-  }
+    .then(res => this._checkResponse(res))
+   }
+
 /* Добавляем новую карточку на сервер */
 
     addNewCard(link, name) {
-    return fetch(`${this._baseUrl}/cards/`, {
+    return fetch(`${this.baseUrl}/cards/`, {
       method: 'POST',
-      headers: this._headers,
+      headers: this.headers,
       body: JSON.stringify({
         name: name,
         link: link,
       })
     })
-    .then(res => _checkResponse(res))
+    .then(res => this._checkResponse(res))
   }
 
   /* Удаляем карточку с сервера */
     deleteCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+    return fetch(`${this.baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: this.headers,
     })
-    .then(res => _checkResponse(res))
+    .then(res => this._checkResponse(res))
   }
 
   /* Добавляем лайк на публикации */
     addLike(cardId, counter) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
-      headers: this._headers,
+      headers: this.headers,
     })
-    .then(res => _checkResponse(res))
+    .then(res => this._checkResponse(res))
     .then((res) => {
       counter.textContent = res.likes.length;
     })
   }
 
   /* Убираем лайк на публикации */
-  removeLike(cardId, counter) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    removeLike(cardId, counter) {
+    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: this.headers,
     })
-    .then(res => _checkResponse(res))
+    .then(res => this._checkResponse(res))
     .then((res) => {
       counter.textContent = res.likes.length;
     })
@@ -78,36 +85,28 @@ export default class Api {
 
 /* Меняем аватарку профиля */
     changeAvatar(avatar) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+    return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: this.headers,
       body: JSON.stringify({
         avatar: avatar
       })
     })
-    .then(res => _checkResponse(res))
+    .then(res => this._checkResponse(res))
   }
 
   /* Редатируем профиль */
     editUserData(name, about) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: this.headers,
       body: JSON.stringify({
         name: name,
         about: about
       })
     })
-    .then(res => checkResponse(res))
+    .then(res => this._checkResponse(res))
   }
 
 }
 
-const api = new Api({
-    baseUrl: 'https://nomoreparties.co/v1/plus-cohort-11',
-    headers: {
-      authorization: '2ce78970-65cf-4453-9ecd-08fb86edda40',
-      'Content-Type': 'application/json'
-    }
-  })
-  

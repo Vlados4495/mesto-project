@@ -1,16 +1,19 @@
 import '../pages/index.css';
 import { editButton, addButton, profilePopup, popups, popupAddImage, cardsContainer,  profileFormAdd , profileForm, editAvatarButton, avatarPopup, profileAvatarForm, profileName, jobName, profileAvatar} from '../components/variables.js'; 
 import { openPopup, closePopup , handleProfileFormSubmit, openProfilePopup, handleProfileAvatarSubmit} from '../components/modal.js'
-import { handleAddFormSubmit, createCard, handleConfirmDelete} from '../components/card.js'
+import { handleAddFormSubmit, createCard} from '../components/Card.js'
 import { enableValidation } from '../components/validate.js'
 
-import Api from '../components/api.js';
-import UserInfo from '../components/userInfo.js';
-import Sections from '../components/Section';
+import { Api , config} from '../components/Api.js';
+import { UserInfo } from '../components/UserInfo.js';
+import Section from '../components/Section.js';
 
 export let userId;
 
-Promise.all([getUserData(), getInitialCards()])
+const api = new Api(config);
+
+
+Promise.all([api.getUserData(), api.getInitialCards()])
   .then(([data, res]) => {
     profileName.textContent = data.name;
     jobName.textContent = data.about;
@@ -34,7 +37,6 @@ editAvatarButton.addEventListener("click", function () {
     openPopup(avatarPopup);
   });
 
-
 //Открываем попап новое место
 addButton.addEventListener("click", function () {
   openPopup(popupAddImage);
@@ -52,12 +54,6 @@ popups.forEach((popup) => {
     })
 })
 
-//Работаем с карточками
-
-// initialCards.forEach((element) => {
-//   const cardElement = createCard(element);
-//   cardsContainer.append(cardElement);
-// });
 
 
 
@@ -69,7 +65,7 @@ profileForm.addEventListener("submit", handleProfileFormSubmit);
 
 profileAvatarForm.addEventListener("submit", handleProfileAvatarSubmit);
 
-// confirmDeletePopup.addEventListener("submit", handleConfirmDelete);
+
 
 editButton.addEventListener("click", openProfilePopup);
 

@@ -13,12 +13,16 @@ export const popupAddImageClosed = document.getElementById("popup__close"); //К
 
 export const cardImagePopup = document.querySelector(".popup__card"); // Попап с картинкой
 export const cardImagePopupClose = document.querySelector("#popup__card_close"); //Кнопка закрыть попап
-export const popups = document.querySelectorAll('.popup');
-export const confirmDeletePopup = document.querySelector('#popup__confirm-delete');
+export const popups = document.querySelectorAll(".popup");
+export const confirmDeletePopup = document.querySelector(
+  "#popup__confirm-delete"
+);
 
+
+//Секция профиль
 export const profileName = document.querySelector(".profile__title");
 export const jobName = document.querySelector(".profile__subtitle");
-export const profileAvatar = document.querySelector(".profile__avatar")
+export const profileAvatar = document.querySelector(".profile__avatar");
 
 export const cardsTemplate = document.querySelector("#cards__template").content;
 export const cardsContainer = document.querySelector(".cards__items");
@@ -31,12 +35,14 @@ export const placeLink = document.querySelector("#input-popup-link");
 export const avatarLink = document.querySelector(".popup__avatar");
 
 export const profileFormAdd = document.querySelector(".popup__form_add");
-export const btn = profileFormAdd.querySelector('.popup__button');
+export const btn = profileFormAdd.querySelector(".popup__button");
 
-export const profileForm = document.querySelector(".popup__form"); 
+export const profileForm = document.querySelector(".popup__form");
 export const profileAvatarForm = document.querySelector(".popup__form_avatar");
-export const profileAvatarSubmitBtn = document.querySelector(".popup__avatar_submit")
+export const profileAvatarSubmitBtn = document.querySelector(
+  ".popup__avatar_submit"
+);
 
-// Находим поля формы в DOM
+// Инпуты из  попапа редактирования профиля
 export const nameInput = document.querySelector("#input-popup-title");
 export const jobInput = document.querySelector("#input-popup-subtitle");
