@@ -1,6 +1,6 @@
 import { nameInput, jobInput, profileName, jobName, profilePopup, profileAvatar, avatarLink, avatarPopup, editButtonSave, profileAvatarSubmitBtn} from '../components/variables.js'; 
 
-import { changeAvatar , editUserData} from './api.js';
+import { Api } from './Api.js';
 
 //Открываем попап
 export function openPopup(popup) {
