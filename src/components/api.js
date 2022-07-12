@@ -60,27 +60,21 @@ export class Api {
   }
 
   /* Добавляем лайк на публикации */
-    addLike(cardId, counter) {
+    addLike(cardId) {
     return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: this.headers,
     })
     .then(res => this._checkResponse(res))
-    .then((res) => {
-      counter.textContent = res.likes.length;
-    })
   }
 
   /* Убираем лайк на публикации */
-    removeLike(cardId, counter) {
+    removeLike(cardId) {
     return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: this.headers,
     })
     .then(res => this._checkResponse(res))
-    .then((res) => {
-      counter.textContent = res.likes.length;
-    })
   }
 
 /* Меняем аватарку профиля */
