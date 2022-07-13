@@ -17,7 +17,8 @@ export const popups = document.querySelectorAll(".popup");
 export const confirmDeletePopup = document.querySelector(
   "#popup__confirm-delete"
 );
-
+export const editAvatarButtonSelector =
+  document.querySelector(".profile__btn-edit");
 
 //Секция профиль
 export const profileName = document.querySelector(".profile__title");

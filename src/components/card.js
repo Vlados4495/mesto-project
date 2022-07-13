@@ -15,10 +15,10 @@ import { Api } from "./Api.js";
 import { userId } from "../pages/index.js";
 
 export class Card {
-  constructor(data, handleCardClick, handleLikeClick, handleDeleteClick) {
+  constructor(data, templateSelector, handleCardClick, handleLikeClick, handleDeleteClick) {
   	this.title = data.title;
 		this.imageUrl = data.imageUrl;
-		this.template = document.querySelector(".cards__item");
+		this.template = document.querySelector(templateSelector);
 		this._likes = data.likes || [];
 		this._myId = data.myId;
 		this._cardId = data.id;
@@ -37,7 +37,7 @@ export class Card {
 	}
 
   _disableDelete() {
-		this._card.querySelector("#delete_button").classList.add("cards__item-delete-hide");
+		this._card.querySelector(".cards__item-delete").classList.add("cards__item-delete-hide");
 	}
 
 	_createCardFromTemplate() {
@@ -49,18 +49,15 @@ export class Card {
 		cardImage.alt = this.title
 		this._card = card;
 	}
-
+  
   _getNewCardElement() {
-		 const cardsElement = cardsTemplate
-        .querySelector(".cards__item")
-        .cloneNode(true);
-        return cardsElement
+    return this.template.content.querySelector(".cards__item").cloneNode(true);
   }
 
     //Метод навешивает обработчики событий на переданную карточку.
     _addEventListenersOnCard() {
 		const cardLike = this._card.querySelector(".cards__like");
-		const deleteIcon = this._card.querySelector("#delete_button");
+		const deleteIcon = this._card.querySelector(".cards__item-delete");
 		const cardImage = this._card.querySelector(".cards__item-image");
 		cardLike.addEventListener("click", (event) => this._onLikeClick(event));
 		deleteIcon.addEventListener("click", (event) => this._onDeleteClick(event));

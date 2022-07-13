@@ -1,5 +1,5 @@
 import '../pages/index.css';
-import { editButton, addButton, profilePopup, popups, popupAddImage, cardsContainer,  profileFormAdd , profileForm, editAvatarButton, avatarPopup, profileAvatarForm, profileName, jobName, profileAvatar} from '../components/variables.js'; 
+import { editButton, addButton, profilePopup, popups, popupAddImage, cardsContainer,  profileFormAdd , profileForm, editAvatarButton, avatarPopup, profileAvatarForm, profileName, jobName, profileAvatar, editAvatarButtonSelector, cardImagePopup, confirmDeletePopup} from '../components/variables.js'; 
 import { openPopup, closePopup , handleProfileFormSubmit, openProfilePopup, handleProfileAvatarSubmit} from '../components/modal.js'
 import { Card } from '../components/Card.js'
 import { Section } from '../components/Section.js';
@@ -9,6 +9,7 @@ import { UserInfo } from '../components/UserInfo.js';
 import Popup  from '../components/Popup.js';
 import  PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupConfirmation from '../components/PopupConfirmation.js';
 
 
 export let userId;
@@ -29,21 +30,85 @@ const userInfo = new UserInfo(profileName, jobName, profileAvatar);
     console.log(err);
   });
 
-//   // 3 попап - Раскрытие картинки на весь экран:
-// const popupGallerySelector = document.querySelector('#popup__card')
-// const popupWithGallery = new PopupWithImage(popupGallerySelector);
-// popupWithGallery.setEventListeners();
-
-// function openGallery(name, link) {
-// 	popupWithGallery.open({src: link, alt: name});
-// };
-
 const cardsSection = new Section ({
 	items: [],
 	renderer: (item) => {
 		const card = createCard(item)
 		cardsSection.addItem(card);
 	}}, cardsContainer);
+
+// Добавление новой карточки и её отправка на сервер:
+const popupAdd = new PopupWithForm(popupAddImage, function(values) {
+	return api.addCard({
+		name: values.name,
+		link: values.link
+	})
+	.then((data) => {
+		const card = createCard(data)
+		cardsSection.addItem(card);
+		popupAdd.close();
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+});
+popupAdd.setEventListeners();
+
+// Получение информации о профиле пользователя с сервера:
+const popupEdit = new PopupWithForm(profilePopup, function(data) {
+	return api.editUserData(data)
+	.then(() => {
+		userInfo.setUserInfo(data);
+		popupEdit.close();
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+});
+popupEdit.setEventListeners();
+
+// Изменение аватара пользователя:
+const popupNewAvatar = new PopupWithForm(avatarPopup, values => {
+	return api.changeAvatar(values)
+  .then(() => {
+    userInfo.setUserAvatar(values.avatar);
+    popupNewAvatar.close();
+  })
+	.catch((err) => {
+		console.log(err);
+	});
+});
+popupNewAvatar.setEventListeners();
+
+
+// Открытие попапа обновления аватара пользователя:
+document.querySelector(editAvatarButtonSelector).addEventListener("click", () => {
+  popupNewAvatar.open();
+})
+
+// 1 попап - Редактирование профиля:
+// Открытие попапа редактирования профиля:
+editButton.addEventListener("click", () => {
+  popupEdit.open();
+	popupEdit.setInputValues(userInfo.getUserInfo());
+})
+
+// 2 попап - Добавление нового места:
+addButton.addEventListener("click", function() {
+	popupAdd.open();
+});
+
+// 3 попап - Раскрытие картинки на весь экран:
+const popupWithGallery = new PopupWithImage(cardImagePopup);
+popupWithGallery.setEventListeners();
+
+function openGallery(name, link) {
+	popupWithGallery.open({src: link, alt: name});
+};
+
+// 4 отрисовка списка карточек
+const popupConfirmDelete = new PopupConfirmation(confirmDeletePopup);
+popupConfirmDelete.setEventListeners();
 
   function createCard({name, link, likes, _id, owner}) {
     const data = {
@@ -55,7 +120,7 @@ const cardsSection = new Section ({
       owner: owner
     };
    
-    const card = new Card(data, "#cards__template", handleLikeClick, handleDeleteClick);
+    const card = new Card(data, "#cards__template", openGallery, handleLikeClick, handleDeleteClick);
     const cardElement = card.buildCard();
     function handleLikeClick(id, isLiked) {
       if (isLiked) {
@@ -79,15 +144,20 @@ const cardsSection = new Section ({
       }
     }
 
-      function handleDeleteClick () {
-              api.deleteCard(_id)
-                .then((res) => {
-                  cardElement.remove();
-                })
-                .catch((err) => {
-                  console.log(err.message);
-                });
-            }
+    function handleDeleteClick() {
+      popupConfirmDelete.setHandleFormSubmit(() => {
+        api.deleteCard(_id)
+        .then(() => {
+          cardElement.remove();
+          popupConfirmDelete.close()
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      });
+      popupConfirmDelete.open();
+    }
+
     return cardElement;
   };
 

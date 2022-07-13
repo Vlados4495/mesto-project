@@ -90,14 +90,11 @@ export class Api {
   }
 
   /* Редатируем профиль */
-    editUserData(name, about) {
+    editUserData(data) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this.headers,
-      body: JSON.stringify({
-        name: name,
-        about: about
-      })
+      body: JSON.stringify(data)
     })
     .then(res => this._checkResponse(res))
   }

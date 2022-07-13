@@ -1,50 +1,40 @@
-import Popup from './Popup';
+import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup {
-  constructor(popupSelector, formSubmitCallback) {
-    super(popupSelector);
-    this._formSubmitCallback = formSubmitCallback;
-    this._popupForm = this._popup.querySelector('.popup');
-    this._formInputList = this._popupForm.querySelectorAll('.popup__input');
-    this._btnName = this._popupForm.querySelector('.popup__button');
-    this._defaultText = this._btnName.value;
-    this._newInputValues = {};
-    this._submitEvtHandler = this._submitEvtHandler.bind(this);
-  }
+	constructor(popupSelector, handleFormSubmit) {
+		super(popupSelector);
+		this._handleFormSubmit = handleFormSubmit;
+		this._form = this._rootElement.querySelector("form");
+		this._popupButton = this._rootElement.querySelector(".popup__button");
+		this._inputs = this._rootElement.querySelectorAll(".popup__input");
+	}
 
-  _getInputValues() {
-    this._formInputList.forEach(input => {
-      this._newInputValues[input.name] = input.value;
-    });
-    return this._newInputValues;
-  }
+  setInputValues(formValues) {
+		this._inputs.forEach(input => input.value = formValues[input.name]);
+	}
 
-  _submitEvtHandler(evt) {
-    evt.preventDefault();
-    this._formSubmitCallback(this._getInputValues());
-  }
+	_getInputValues() {
+		const formValues = {};
+		this._inputs.forEach(input => formValues[input.name] = input.value);
+		 return formValues;
+	}
 
-  _setEventListeners() {
-    super._setEventListeners();
-    this._popupForm.addEventListener('submit', this._submitEvtHandler);
-  }
+  setEventListeners() {
+		this._form.addEventListener("submit", (event) => {
+			const oldValue = this._popupButton.textContent;
+			this._popupButton.textContent = "Сохранение...";
+			this._handleFormSubmit(this._getInputValues())
+			.finally(() => {
+				this._popupButton.textContent = oldValue;
+			})
+			event.preventDefault();
+		});
+		return super.setEventListeners();
+	}
 
-  _removeEventListeners() {
-    super._removeEventListeners();
-    this._popupForm.removeEventListener('submit', this._submitEvtHandler);
-  }
+	close() {
+		this._form.reset();
+		return super.close();
+	}
 
-  close() {
-    super.close();
-    this._popupForm.reset();
-    this._removeEventListeners();
-  }
-
-  setBtnStatusSaving(isLoading) {
-    if (isLoading) {
-      this._btnName.value = 'Сохранение...';
-    } else {
-      this._btnName.value = this._defaultText;
-    }
-  }
 }

@@ -1,5 +1,5 @@
 const closeButtonSelector = "popup_closed"
-const popupOpenClass = "popup_opened";
+const popupOpenClass = ".popup_opened";
 export default class Popup {
 	constructor(popupSelector) {
 		this._rootElement = document.querySelector(popupSelector);
