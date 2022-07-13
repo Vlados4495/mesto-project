@@ -7,7 +7,7 @@ import { enableValidation } from '../components/validate.js'
 import { Api , config} from '../components/Api.js';
 import { UserInfo } from '../components/UserInfo.js';
 import Popup  from '../components/Popup.js';
-import  PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupConfirmation from '../components/PopupConfirmation.js';
 
@@ -25,6 +25,7 @@ const userInfo = new UserInfo(profileName, jobName, profileAvatar);
     userInfo.setUserAvatar(userData.avatar);
     cardsSection.setItems(cardsData);
 	  cardsSection.renderItems();
+    console.log(cardsData)
   })
   .catch(err => {
     console.log(err);
@@ -38,7 +39,7 @@ const cardsSection = new Section ({
 	}}, cardsContainer);
 
 // Добавление новой карточки и её отправка на сервер:
-const popupAdd = new PopupWithForm(popupAddImage, function(values) {
+const popupAdd = new PopupWithForm("#popup-add", function(values) {
 	return api.addCard({
 		name: values.name,
 		link: values.link
@@ -55,7 +56,7 @@ const popupAdd = new PopupWithForm(popupAddImage, function(values) {
 popupAdd.setEventListeners();
 
 // Получение информации о профиле пользователя с сервера:
-const popupEdit = new PopupWithForm(profilePopup, function(data) {
+const popupEdit = new PopupWithForm("#popup-edit", function(data) {
 	return api.editUserData(data)
 	.then(() => {
 		userInfo.setUserInfo(data);
@@ -68,7 +69,7 @@ const popupEdit = new PopupWithForm(profilePopup, function(data) {
 popupEdit.setEventListeners();
 
 // Изменение аватара пользователя:
-const popupNewAvatar = new PopupWithForm(avatarPopup, values => {
+const popupNewAvatar = new PopupWithForm("#popup__edit_avatar", values => {
 	return api.changeAvatar(values)
   .then(() => {
     userInfo.setUserAvatar(values.avatar);
@@ -82,7 +83,7 @@ popupNewAvatar.setEventListeners();
 
 
 // Открытие попапа обновления аватара пользователя:
-document.querySelector(editAvatarButtonSelector).addEventListener("click", () => {
+editAvatarButtonSelector.addEventListener("click", () => {
   popupNewAvatar.open();
 })
 
@@ -99,7 +100,7 @@ addButton.addEventListener("click", function() {
 });
 
 // 3 попап - Раскрытие картинки на весь экран:
-const popupWithGallery = new PopupWithImage(cardImagePopup);
+const popupWithGallery = new PopupWithImage(".popup__card");
 popupWithGallery.setEventListeners();
 
 function openGallery(name, link) {
@@ -107,7 +108,7 @@ function openGallery(name, link) {
 };
 
 // 4 отрисовка списка карточек
-const popupConfirmDelete = new PopupConfirmation(confirmDeletePopup);
+const popupConfirmDelete = new PopupConfirmation('#popup__confirm-delete');
 popupConfirmDelete.setEventListeners();
 
   function createCard({name, link, likes, _id, owner}) {
@@ -163,33 +164,17 @@ popupConfirmDelete.setEventListeners();
 
  //////////////////////////////////////////////////////////    
 
-
-
-   
-editButton.addEventListener("click", function () {
-  openPopup(profilePopup);
-});
-
-editAvatarButton.addEventListener("click", function () {
-    openPopup(avatarPopup);
-  });
-
-//Открываем попап новое место
-addButton.addEventListener("click", function () {
-  openPopup(popupAddImage);
-});
-
-//Закрываем попап
-popups.forEach((popup) => {
-    popup.addEventListener('mousedown', (evt) => {
-        if (evt.target.classList.contains('popup_opened')) {
-            closePopup(popup)
-        }
-        if (evt.target.classList.contains('popup__closed')) {
-          closePopup(popup)
-        }
-    })
-})
+// //Закрываем попап
+// popups.forEach((popup) => {
+//     popup.addEventListener('mousedown', (evt) => {
+//         if (evt.target.classList.contains('popup_opened')) {
+//             closePopup(popup)
+//         }
+//         if (evt.target.classList.contains('popup__closed')) {
+//           closePopup(popup)
+//         }
+//     })
+// })
 
 
 

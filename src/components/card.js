@@ -1,18 +1,18 @@
-import { openPopup, closePopup } from "./modal.js";
-import {
-  cardImagePopup,
-  cardsContainer,
-  cardImageLink,
-  cardImageTitle,
-  placeName,
-  placeLink,
-  popupAddImage,
-  profileFormAdd,
-  cardsTemplate,
-  btn,
-} from "./variables.js";
-import { Api } from "./Api.js";
-import { userId } from "../pages/index.js";
+// import { openPopup, closePopup } from "./modal.js";
+// import {
+//   cardImagePopup,
+//   cardsContainer,
+//   cardImageLink,
+//   cardImageTitle,
+//   placeName,
+//   placeLink,
+//   popupAddImage,
+//   profileFormAdd,
+//   cardsTemplate,
+//   btn,
+// } from "./variables.js";
+// import { Api } from "./Api.js";
+// import { userId } from "../pages/index.js";
 
 export class Card {
   constructor(data, templateSelector, handleCardClick, handleLikeClick, handleDeleteClick) {

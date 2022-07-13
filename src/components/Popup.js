@@ -1,19 +1,17 @@
-const closeButtonSelector = "popup_closed"
-const popupOpenClass = ".popup_opened";
 export default class Popup {
 	constructor(popupSelector) {
 		this._rootElement = document.querySelector(popupSelector);
-		this._closeButtonElement = this._rootElement.querySelector(closeButtonSelector);
+		this._closeButtonElement = this._rootElement.querySelector('.popup__closed');
 		this._handleEscClose = this._handleEscClose.bind(this);
 	}
 
 	open() {
-		this._rootElement.classList.add(popupOpenClass);
+		this._rootElement.classList.add('popup_opened');
 		document.addEventListener("keydown", this._handleEscClose);
 	}
 
 	close() {
-		this._rootElement.classList.remove(popupOpenClass);
+		this._rootElement.classList.remove('popup_opened');
 		document.removeEventListener("keydown", this._handleEscClose);
 	}
 
@@ -24,18 +22,14 @@ export default class Popup {
 	}
 
 	_handleOverlayClick(event) {
-		if (event.target.classList.contains(popupOpenClass)) {
+		if (event.target.classList.contains('popup_opened')) {
 			this.close();
 		}
 	}
 
-	_handleCloseButtonClick() {
-		this.close();
-	}
-
 	setEventListeners() {
 		this._rootElement.addEventListener("mousedown", (event) => this._handleOverlayClick(event));
-		this._closeButtonElement.addEventListener("click", (event) => this._handleCloseButtonClick(event));
+		this._closeButtonElement.addEventListener("click", () => this.close());
 	}
 }
 
