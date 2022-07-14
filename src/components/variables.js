@@ -1,3 +1,12 @@
+export const validatorSettings = {
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_inactive",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__input-error_active"
+};
+
+
 export const editButton = document.querySelector(".profile__edit-button"); //Кнопка редактировать профиль
 export const editAvatarButton = document.querySelector(".profile__btn-edit");
 export const editButtonSave = document.querySelector(".popup__button"); //Кнопка сохранить изменения в профиле

@@ -1,15 +1,13 @@
 import '../pages/index.css';
-import { editButton, addButton, profilePopup, popups, popupAddImage, cardsContainer,  profileFormAdd , profileForm, editAvatarButton, avatarPopup, profileAvatarForm, profileName, jobName, profileAvatar, editAvatarButtonSelector, cardImagePopup, confirmDeletePopup , myId} from '../components/variables.js'; 
-import { openPopup, closePopup , handleProfileFormSubmit, openProfilePopup, handleProfileAvatarSubmit} from '../components/modal.js'
+import { editButton, addButton, cardsContainer,  profileFormAdd , profileForm, profileAvatarForm, profileName, jobName, profileAvatar, editAvatarButtonSelector, myId, validatorSettings} from '../components/variables.js'; 
 import { Card } from '../components/Card.js'
 import { Section } from '../components/Section.js';
-import { enableValidation } from '../components/validate.js'
 import { Api , config} from '../components/Api.js';
 import { UserInfo } from '../components/UserInfo.js';
-import Popup  from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupConfirmation from '../components/PopupConfirmation.js';
+import FormValidator from '../components/FormValidator.js';
 
 
 export let userId
@@ -71,7 +69,6 @@ popupEdit.setEventListeners();
 const popupNewAvatar = new PopupWithForm("#popup__edit_avatar", function(data) {
 	return api.changeAvatar(data)
   .then(() => {
-    console.log(data)
     userInfo.setUserAvatar(data);
     popupNewAvatar.close();
   })
@@ -164,28 +161,12 @@ popupConfirmDelete.setEventListeners();
 
     return cardElement;
   };
+  
 
- //////////////////////////////////////////////////////////    
-
-
-
-
-
-
-// profileFormAdd.addEventListener("submit", handleAddFormSubmit);
-// profileForm.addEventListener("submit", handleProfileFormSubmit);
-// profileAvatarForm.addEventListener("submit", handleProfileAvatarSubmit);
-// editButton.addEventListener("click", openProfilePopup);
-
-//Валидация формы
-
-
- enableValidation({
-    formListSelector: '.form',
-    formSet: '.form__set',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    disabledButtonClass: 'popup__button_inactive',
-    errorClass: 'popup__input-error_active'
- });
-
+// Валидация форм
+ const editProfileValidate = new FormValidator (validatorSettings, profileForm);
+ const editAvatarValidate = new FormValidator (validatorSettings, profileAvatarForm);
+ const addNewCardValidate = new FormValidator (validatorSettings, profileFormAdd);
+ addNewCardValidate.enableValidation();
+ editAvatarValidate.enableValidation();
+ editProfileValidate.enableValidation();
