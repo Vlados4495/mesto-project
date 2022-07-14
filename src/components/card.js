@@ -1,26 +1,10 @@
-// import { openPopup, closePopup } from "./modal.js";
-// import {
-//   cardImagePopup,
-//   cardsContainer,
-//   cardImageLink,
-//   cardImageTitle,
-//   placeName,
-//   placeLink,
-//   popupAddImage,
-//   profileFormAdd,
-//   cardsTemplate,
-//   btn,
-// } from "./variables.js";
-// import { Api } from "./Api.js";
-// import { userId } from "../pages/index.js";
-
 export class Card {
   constructor(data, templateSelector, handleCardClick, handleLikeClick, handleDeleteClick) {
   	this.title = data.title;
 		this.imageUrl = data.imageUrl;
 		this.template = document.querySelector(templateSelector);
 		this._likes = data.likes || [];
-		this._myId = data.myId;
+		this._myId = data._id;
 		this._cardId = data.id;
 		this._ownerId = data.owner._id;
 		this._handleCardClick = handleCardClick;
@@ -105,7 +89,7 @@ export class Card {
       }
       return this._card;
     }
-    
+  
   }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //Получаем шаблон из разметки

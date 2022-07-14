@@ -38,7 +38,7 @@ export class Api {
 
 /* Добавляем новую карточку на сервер */
 
-    addNewCard(link, name) {
+    addNewCard(name, link) {
     return fetch(`${this.baseUrl}/cards/`, {
       method: 'POST',
       headers: this.headers,
@@ -79,7 +79,7 @@ export class Api {
 
 /* Меняем аватарку профиля */
     changeAvatar(avatar) {
-    return fetch(`${this.baseUrl}/users/me/avatar`, {
+    return fetch(`${this.baseUrl}/users/me/avatar/`, {
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify({

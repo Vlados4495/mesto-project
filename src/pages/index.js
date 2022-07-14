@@ -1,5 +1,5 @@
 import '../pages/index.css';
-import { editButton, addButton, profilePopup, popups, popupAddImage, cardsContainer,  profileFormAdd , profileForm, editAvatarButton, avatarPopup, profileAvatarForm, profileName, jobName, profileAvatar, editAvatarButtonSelector, cardImagePopup, confirmDeletePopup} from '../components/variables.js'; 
+import { editButton, addButton, profilePopup, popups, popupAddImage, cardsContainer,  profileFormAdd , profileForm, editAvatarButton, avatarPopup, profileAvatarForm, profileName, jobName, profileAvatar, editAvatarButtonSelector, cardImagePopup, confirmDeletePopup , myId} from '../components/variables.js'; 
 import { openPopup, closePopup , handleProfileFormSubmit, openProfilePopup, handleProfileAvatarSubmit} from '../components/modal.js'
 import { Card } from '../components/Card.js'
 import { Section } from '../components/Section.js';
@@ -12,7 +12,8 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupConfirmation from '../components/PopupConfirmation.js';
 
 
-export let userId;
+export let userId
+
 
 const api = new Api(config);
 
@@ -22,14 +23,15 @@ const userInfo = new UserInfo(profileName, jobName, profileAvatar);
   .then(([userData, cardsData]) => {
     userInfo.setUserInfo(userData);
     userInfo.setUserId(userData._id);
+    myId.id = userData._id;
     userInfo.setUserAvatar(userData.avatar);
     cardsSection.setItems(cardsData);
 	  cardsSection.renderItems();
-    console.log(cardsData)
   })
   .catch(err => {
     console.log(err);
   });
+  
 
 const cardsSection = new Section ({
 	items: [],
@@ -39,10 +41,10 @@ const cardsSection = new Section ({
 	}}, cardsContainer);
 
 // Добавление новой карточки и её отправка на сервер:
-const popupAdd = new PopupWithForm("#popup-add", function(values) {
-	return api.addCard({
-		name: values.name,
-		link: values.link
+const popupAdd = new PopupWithForm("#popup-add", function(data) {
+	return api.addNewCard({
+		name: data.name,
+		link: data.link,
 	})
 	.then((data) => {
 		const card = createCard(data)
@@ -69,10 +71,10 @@ const popupEdit = new PopupWithForm("#popup-edit", function(data) {
 popupEdit.setEventListeners();
 
 // Изменение аватара пользователя:
-const popupNewAvatar = new PopupWithForm("#popup__edit_avatar", values => {
-	return api.changeAvatar(values)
+const popupNewAvatar = new PopupWithForm("#popup__edit_avatar", function(data) {
+	return api.changeAvatar(data)
   .then(() => {
-    userInfo.setUserAvatar(values.avatar);
+    userInfo.setUserAvatar(data);
     popupNewAvatar.close();
   })
 	.catch((err) => {
@@ -120,8 +122,9 @@ popupConfirmDelete.setEventListeners();
       id: _id,
       owner: owner
     };
-   
+
     const card = new Card(data, "#cards__template", openGallery, handleLikeClick, handleDeleteClick);
+   
     const cardElement = card.buildCard();
     function handleLikeClick(id, isLiked) {
       if (isLiked) {
@@ -145,6 +148,8 @@ popupConfirmDelete.setEventListeners();
       }
     }
 
+    
+
     function handleDeleteClick() {
       popupConfirmDelete.setHandleFormSubmit(() => {
         api.deleteCard(_id)
@@ -163,18 +168,6 @@ popupConfirmDelete.setEventListeners();
   };
 
  //////////////////////////////////////////////////////////    
-
-// //Закрываем попап
-// popups.forEach((popup) => {
-//     popup.addEventListener('mousedown', (evt) => {
-//         if (evt.target.classList.contains('popup_opened')) {
-//             closePopup(popup)
-//         }
-//         if (evt.target.classList.contains('popup__closed')) {
-//           closePopup(popup)
-//         }
-//     })
-// })
 
 
 

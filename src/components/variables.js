@@ -47,3 +47,8 @@ export const profileAvatarSubmitBtn = document.querySelector(
 // Инпуты из  попапа редактирования профиля
 export const nameInput = document.querySelector("#input-popup-title");
 export const jobInput = document.querySelector("#input-popup-subtitle");
+
+
+export let myId = {
+  id: '',
+} ;

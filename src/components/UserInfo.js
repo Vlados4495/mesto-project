@@ -19,7 +19,6 @@ export class UserInfo {
 
     setUserAvatar(avatar) {
       this._editAvatarButton.src = avatar;
-      console.log(avatar)
     }
 
     setUserId(id) {
