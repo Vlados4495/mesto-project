@@ -42,10 +42,7 @@ const cardsSection = new Section ({
 
 // Добавление новой карточки и её отправка на сервер:
 const popupAdd = new PopupWithForm("#popup-add", function(data) {
-	return api.addNewCard({
-		name: data.name,
-		link: data.link,
-	})
+	return api.addNewCard(data.name, data.link)
 	.then((data) => {
 		const card = createCard(data)
 		cardsSection.addItem(card);
@@ -74,6 +71,7 @@ popupEdit.setEventListeners();
 const popupNewAvatar = new PopupWithForm("#popup__edit_avatar", function(data) {
 	return api.changeAvatar(data)
   .then(() => {
+    console.log(data)
     userInfo.setUserAvatar(data);
     popupNewAvatar.close();
   })

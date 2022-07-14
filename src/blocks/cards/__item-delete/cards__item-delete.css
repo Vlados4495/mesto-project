@@ -9,7 +9,7 @@
     right: 20px;
     cursor: pointer;
     transition: opacity 0.5s ease 0s;
-    display: none;
+    display: block;
   }
   
   .cards__item-delete:hover {
