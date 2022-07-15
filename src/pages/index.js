@@ -1,5 +1,5 @@
 import '../pages/index.css';
-import { editButton, addButton, cardsContainer,  profileFormAdd , profileForm, profileAvatarForm, profileName, jobName, profileAvatar, editAvatarButtonSelector, myId, validatorSettings} from '../components/variables.js'; 
+import { editButton, addButton, cardsContainer,  profileFormAdd , profileForm, profileAvatarForm, editAvatarButtonSelector, myId, validatorSettings} from '../components/variables.js'; 
 import { Card } from '../components/Card.js'
 import { Section } from '../components/Section.js';
 import { Api , config} from '../components/Api.js';
@@ -13,7 +13,7 @@ import FormValidator from '../components/FormValidator.js';
 const api = new Api(config);
 
 // Получение информации о профиле пользователя  и получение списка карточек
-const userInfo = new UserInfo(profileName, jobName, profileAvatar);
+const userInfo = new UserInfo(".profile__title", ".profile__subtitle", ".profile__avatar");
     Promise.all([api.getUserData(), api.getInitialCards()])
   .then(([userData, cardsData]) => {
     userInfo.setUserInfo(userData);
@@ -124,6 +124,7 @@ popupConfirmDelete.setEventListeners();
         .then((data) => {
           card.setLikesCounter(data.likes.length);
           card.updateLikes(data.likes);
+          card.activeLike();
         })
         .catch((err) => {
           console.log(err);
@@ -133,6 +134,7 @@ popupConfirmDelete.setEventListeners();
         .then((data) => {
           card.setLikesCounter(data.likes.length);
           card.updateLikes(data.likes);
+          card.activeLike();
         })
         .catch((err) => {
           console.log(err);

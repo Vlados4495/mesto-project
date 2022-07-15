@@ -56,9 +56,13 @@ export class Card {
     cardImage.addEventListener("click", (event) => this._onImageClick(event));
   }
 
+  activeLike() {
+   this._card.querySelector(".cards__like").classList.toggle("cards__like_active");
+  }
+
   //Обработчик клика по лайку.
   _onLikeClick(event) {
-    event.target.classList.toggle("cards__like_active");
+    // event.target.classList.toggle("cards__like_active");
     this._handleLikeClick(this._cardId, this._isLiked());
   }
 
