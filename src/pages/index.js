@@ -69,7 +69,7 @@ popupEdit.setEventListeners();
 const popupNewAvatar = new PopupWithForm("#popup__edit_avatar", function(data) {
 	return api.changeAvatar(data)
   .then(() => {
-    userInfo.setUserAvatar(data);
+    userInfo.setUserAvatar(data.link);
     popupNewAvatar.close();
   })
 	.catch((err) => {
