@@ -2,10 +2,9 @@ export const validatorSettings = {
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
   inactiveButtonClass: "popup__button_inactive",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__input-error_active"
+  inputErrorClass: "popup__input_error",
+  errorClass: "popup__input-error_active",
 };
-
 
 export const editButton = document.querySelector(".profile__edit-button"); //Кнопка редактировать профиль
 export const editAvatarButton = document.querySelector(".profile__btn-edit");
@@ -57,7 +56,6 @@ export const profileAvatarSubmitBtn = document.querySelector(
 export const nameInput = document.querySelector("#input-popup-title");
 export const jobInput = document.querySelector("#input-popup-subtitle");
 
-
 export let myId = {
-  id: '',
-} ;
+  id: "",
+};

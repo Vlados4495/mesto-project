@@ -10,9 +10,6 @@ import PopupConfirmation from '../components/PopupConfirmation.js';
 import FormValidator from '../components/FormValidator.js';
 
 
-export let userId
-
-
 const api = new Api(config);
 
 // Получение информации о профиле пользователя  и получение списка карточек
@@ -143,8 +140,6 @@ popupConfirmDelete.setEventListeners();
       }
     }
 
-    
-
     function handleDeleteClick() {
       popupConfirmDelete.setHandleFormSubmit(() => {
         api.deleteCard(_id)
@@ -158,11 +153,9 @@ popupConfirmDelete.setEventListeners();
       });
       popupConfirmDelete.open();
     }
-
     return cardElement;
   };
   
-
 // Валидация форм
  const editProfileValidate = new FormValidator (validatorSettings, profileForm);
  const editAvatarValidate = new FormValidator (validatorSettings, profileAvatarForm);
